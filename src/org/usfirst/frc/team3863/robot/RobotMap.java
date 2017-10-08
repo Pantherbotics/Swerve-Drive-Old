@@ -19,6 +19,7 @@ public class RobotMap {
 
     public static double WHEEL_BASE = 30;   //in
     public static double TRACK_WIDTH = 30;  //in
+    public static double RADIUS = Math.sqrt(Math.pow(WHEEL_BASE, 2) + Math.pow(TRACK_WIDTH, 2));
 
     public static int topRight_Drive = 0;
     public static int topRight_Steer = 1;
@@ -37,4 +38,9 @@ public class RobotMap {
     public static int topLeft_Solenoid = 1;
     public static int botRight_Solenoid = 2;
     public static int botLeft_Solenoid = 3;
+
+    public static int leftJoy = 0;
+    public static int rightJoy = 1;
+
+    public static int gyro = 1;
 }
