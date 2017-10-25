@@ -29,6 +29,8 @@ public class RobotMap {
     public static int botRight_Steer = 3;
     public static int botLeft_Drive = 4;
     public static int botLeft_Steer = 5;
+    
+    public static int PCM_ID = 0;
 
     public static double steer_P = 0.0;
     public static double steer_I = 0.0;

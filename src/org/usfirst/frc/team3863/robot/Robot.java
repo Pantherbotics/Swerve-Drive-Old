@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-import org.usfirst.frc.team3863.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team3863.robot.subsystems.*;
 
 
 
@@ -25,6 +25,7 @@ import org.usfirst.frc.team3863.robot.subsystems.Drivetrain;
 public class Robot extends IterativeRobot {
 
 	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final PneumaticsCompressor compressor = new PneumaticsCompressor();
 	public static OI oi;
 
 	Command autonomousCommand;
@@ -48,6 +49,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		compressor.disableCompressor();
 
 	}
 
@@ -69,7 +71,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+		compressor.enableCompressor();
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-
+		compressor.enableCompressor();
 	}
 
 	/**
@@ -98,6 +100,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		compressor.enableCompressor();
 		LiveWindow.run();
 	}
 }
