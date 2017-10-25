@@ -28,14 +28,17 @@ public class SwerveModule {
         //this.setInHighGear();
         steeringMotor = new CANTalon(steeringMotorID);
         steeringMotor.enableBrakeMode(true);
-        if(steeringMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder).equals(CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent)) {
-            steeringMotor.enableZeroSensorPositionOnIndex(true, true);      //encoder position is within [0, 3360]
-            steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position);
-            steeringMotor.setPID(steerP,steerI,steerD);
-            zeroRotation();
+        if(steeringMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder).equals(CANTalon.FeedbackDeviceStatus.FeedbackStatusPresent) || 
+           steeringMotor.isSensorPresent(CANTalon.FeedbackDevice.QuadEncoder).equals(CANTalon.FeedbackDeviceStatus.FeedbackStatusUnknown)) {
+        	
+             steeringMotor.enableZeroSensorPositionOnIndex(true, true);      //encoder position is within [0, 3360]
+             steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position);
+             steeringMotor.setPID(steerP,steerI,steerD);
+             zeroRotation();
+             System.out.println("DEBUG: Encoder and PID settings for CANTalon: " + steeringMotorID + " have been applied");
         }
         else
-            throw new Error("Encoder is not detected. Verify that all wires are plugged in securely.");
+             System.out.println("ERROR: Encoder on CANTalon: " + steeringMotorID + " is not detected. Verify that all wires are plugged in securely. ");
 
     }
 
