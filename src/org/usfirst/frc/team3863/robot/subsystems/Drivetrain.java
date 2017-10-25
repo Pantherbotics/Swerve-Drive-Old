@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3863.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team3863.robot.RobotMap;
 import org.usfirst.frc.team3863.robot.SwerveModule;
@@ -17,18 +18,25 @@ public class Drivetrain extends Subsystem {
 
     private AnalogGyro gyro;
 
+    private DoubleSolenoid shifter;
+
+    private boolean inHighGear;
+
+
     public void initDefaultCommand() {
         setDefaultCommand(new Drive());
     }
 
     public Drivetrain(){
-        topLeft = new SwerveModule(RobotMap.topLeft_Drive, RobotMap.topLeft_Steer, false, RobotMap.topLeft_Solenoid, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
-        topRight = new SwerveModule(RobotMap.topRight_Drive, RobotMap.topRight_Steer, false, RobotMap.topRight_Solenoid, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
-        bottomRight = new SwerveModule(RobotMap.botRight_Drive, RobotMap.botRight_Steer, false, RobotMap.botRight_Solenoid, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
-        bottomLeft = new SwerveModule(RobotMap.botLeft_Drive, RobotMap.botLeft_Steer, false, RobotMap.botLeft_Solenoid, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
+        topLeft = new SwerveModule(RobotMap.topLeft_Drive, RobotMap.topLeft_Steer, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
+        topRight = new SwerveModule(RobotMap.topRight_Drive, RobotMap.topRight_Steer, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
+        bottomRight = new SwerveModule(RobotMap.botRight_Drive, RobotMap.botRight_Steer, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
+        bottomLeft = new SwerveModule(RobotMap.botLeft_Drive, RobotMap.botLeft_Steer, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D);
 
         gyro = new AnalogGyro(RobotMap.gyro);
         gyro.calibrate();
+
+        shifter = new DoubleSolenoid(RobotMap.shift_Forward, RobotMap.shift_Reverse);
     }
     //set is an array
     public void setTopLeft(double[] set){
@@ -57,6 +65,20 @@ public class Drivetrain extends Subsystem {
 
     public double getHeadingRadians(){
         return Math.toRadians(gyro.getAngle());
+    }
+
+    public void setInHighGear(){
+        inHighGear = true;
+        shifter.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public void setInLowGear(){
+        inHighGear = false;
+        shifter.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public boolean isInHighGear(){
+        return inHighGear;
     }
 }
 
