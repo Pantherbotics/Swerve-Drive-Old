@@ -74,11 +74,11 @@ public class SwerveModule {
 
     public void zeroRotation(){
         //TODO: Find a way for the Talon to go past the limit switch but still zero the encoder.
-        steeringMotor.changeControlMode(SmartMotorController.TalonControlMode.PercentVbus);
+        steeringMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
         while(steeringMotor.getPosition()!=0){
             steeringMotor.set(1);
         }
-        steeringMotor.changeControlMode(SmartMotorController.TalonControlMode.Position);
+        steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position);
     }
 
     /*public void setInHighGear(){
