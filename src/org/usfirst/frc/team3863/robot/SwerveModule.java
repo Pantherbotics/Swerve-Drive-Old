@@ -11,7 +11,6 @@ public class SwerveModule {
     private boolean isReversed;
     private CANTalon driveMotor;
     private CANTalon steeringMotor;
-    private Solenoid shifter;
     private boolean inHighGear;
     private double angle;
     private double speed;
@@ -75,6 +74,11 @@ public class SwerveModule {
 
     public void zeroRotation(){
         //TODO: Find a way for the Talon to go past the limit switch but still zero the encoder.
+        steeringMotor.changeControlMode(SmartMotorController.TalonControlMode.PercentVbus);
+        while(steeringMotor.getPosition()!=0){
+            steeringMotor.set(1);
+        }
+        steeringMotor.changeControlMode(SmartMotorController.TalonControlMode.Position);
     }
 
     /*public void setInHighGear(){
