@@ -34,7 +34,8 @@ public class SwerveModule {
              steeringMotor.enableZeroSensorPositionOnIndex(true, true);      //encoder position is within [0, 3360]
              steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position);
              steeringMotor.setPID(steerP,steerI,steerD);
-             zeroRotation();
+             //TODO: Get this zero function working
+             //zeroRotation();
              System.out.println("DEBUG: Encoder and PID settings for CANTalon: " + steeringMotorID + " have been applied");
         }
         else

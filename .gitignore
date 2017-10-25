@@ -1,6 +1,8 @@
 /bin/
 build/
 dist/
+/build/
+/dist/
 
 #---------------------------Java Gitignore---------------------------
 # Compiled class file
