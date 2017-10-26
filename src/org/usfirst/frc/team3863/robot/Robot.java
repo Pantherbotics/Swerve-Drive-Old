@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		compressor.enableCompressor();
+		drivetrain.enableAll();
 	}
 
 	/**
@@ -92,6 +93,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		LiveWindow.run();
 		Scheduler.getInstance().run();
 	}
 

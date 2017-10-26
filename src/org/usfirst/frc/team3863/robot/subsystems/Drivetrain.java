@@ -35,6 +35,7 @@ public class Drivetrain extends Subsystem {
 
         gyro = new AnalogGyro(RobotMap.gyro);
         gyro.calibrate();
+        
 
         shifter = new DoubleSolenoid(RobotMap.shift_Forward, RobotMap.shift_Reverse);
     }
@@ -79,6 +80,13 @@ public class Drivetrain extends Subsystem {
 
     public boolean isInHighGear(){
         return inHighGear;
+    }
+    
+    public void enableAll() {
+    	topLeft.enable();
+        topRight.enable();
+        bottomLeft.enable();
+        bottomRight.enable();
     }
 }
 

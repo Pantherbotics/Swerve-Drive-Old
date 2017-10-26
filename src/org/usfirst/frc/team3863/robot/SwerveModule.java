@@ -3,6 +3,8 @@ package org.usfirst.frc.team3863.robot;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 
 /**
  * Created by Aaron Fang on 10/3/2017.
@@ -24,6 +26,7 @@ public class SwerveModule {
                          double steerP, double steerI, double steerD){
         this.isReversed = isReversed;
         driveMotor = new CANTalon(driveMotorID);
+        
         //shifter = new Solenoid(highGearID);
         //this.setInHighGear();
         steeringMotor = new CANTalon(steeringMotorID);
@@ -34,6 +37,10 @@ public class SwerveModule {
              steeringMotor.enableZeroSensorPositionOnIndex(true, true);      //encoder position is within [0, 3360]
              steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position);
              steeringMotor.setPID(steerP,steerI,steerD);
+             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
+             //steeringMotor.startLiveWindowMode();
+             
+             
              //TODO: Get this zero function working
              //zeroRotation();
              System.out.println("DEBUG: Encoder and PID settings for CANTalon: " + steeringMotorID + " have been applied");
@@ -55,6 +62,12 @@ public class SwerveModule {
             steeringMotor.set(set);
         }
 
+    }
+    
+    public void enable() {
+        System.out.println(" en: "  + steeringMotor.isEnabled() + " cn: " + steeringMotor.isControlEnabled() + " sf: " + steeringMotor.isSafetyEnabled());
+        steeringMotor.enable();
+        steeringMotor.enableControl();
     }
 
     public void setAngleRadians(double rad){
