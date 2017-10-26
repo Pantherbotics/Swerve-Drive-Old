@@ -18,7 +18,7 @@ public class SwerveModule {
     private double speed;
     /*Motor Specs:
     MiniCIM
-    NeveRest 40 - 28PPR and 1120CPR
+    NeveRest 40 - 280PPR and 1120CPR
 
      */
 
