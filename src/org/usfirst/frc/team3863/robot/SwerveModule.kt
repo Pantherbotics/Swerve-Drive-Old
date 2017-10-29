@@ -49,7 +49,7 @@ class SwerveModule
             steeringMotor.setPID(steerP, steerI, steerD)
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
-
+            zero()
 
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
@@ -83,6 +83,7 @@ class SwerveModule
             while(steeringMotor.encPosition!=0)
                 steeringMotor.set(0.5)
             steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position)
+            println("Zeroed!")
         }
     }
 

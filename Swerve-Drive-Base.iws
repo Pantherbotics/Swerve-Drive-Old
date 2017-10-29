@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8324e9e6-d577-45c9-855d-1142ddbefc32" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.kt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/subsystems/Drivetrain.kt" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/subsystems/Drivetrain.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.2.1/taskArtifacts/taskArtifacts.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Swerve-Drive-Base.iml" afterPath="$PROJECT_DIR$/Swerve-Drive-Base.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Swerve-Drive-Base.iws" afterPath="$PROJECT_DIR$/Swerve-Drive-Base.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew" afterPath="$PROJECT_DIR$/gradlew" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew.bat" afterPath="$PROJECT_DIR$/gradlew.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.kt" afterPath="$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.kt" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -91,8 +77,8 @@
       <file leaf-file-name="SwerveModule.kt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-537">
-              <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+            <state relative-caret-position="330">
+              <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-start-column="38" selection-end-line="83" selection-end-column="38" />
               <folding>
                 <element signature="e#40#192#0" expanded="true" />
               </folding>
@@ -758,12 +744,12 @@
       <workItem from="1508989290427" duration="4016000" />
       <workItem from="1509249263936" duration="1504000" />
       <workItem from="1509250856073" duration="595000" />
-      <workItem from="1509251472033" duration="597000" />
+      <workItem from="1509251472033" duration="1035000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22992000" />
+    <option name="totallyTimeSpent" value="23430000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="2064" height="1128" extended-state="6" />
@@ -1336,8 +1322,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/usfirst/frc/team3863/robot/SwerveModule.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-537">
-          <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+        <state relative-caret-position="330">
+          <caret line="83" column="38" lean-forward="true" selection-start-line="83" selection-start-column="38" selection-end-line="83" selection-end-column="38" />
           <folding>
             <element signature="e#40#192#0" expanded="true" />
           </folding>
