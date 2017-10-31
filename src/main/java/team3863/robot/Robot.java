@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team3863.robot;
+package team3863.robot;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -8,11 +8,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
-import org.usfirst.frc.team3863.robot.subsystems.*;
-
-
+import team3863.robot.subsystems.PneumaticsCompressor;
+import team3863.subsystems.Drivetrain;
 
 
 /**

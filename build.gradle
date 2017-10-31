@@ -1,4 +1,5 @@
 plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.51"
     id "java"
     id "eclipse"
     id "idea"
@@ -20,10 +21,15 @@ deploy {
         artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
             targets << "roborio"
         }
+        artifact('frcKotlin', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+            jar = 'jar'
+        }
     }
 }
 repositories {
     jcenter()
+    mavenCentral()
 }
 // Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
 // and NavX.
@@ -32,6 +38,7 @@ dependencies {
     compile ctre()
     compile navx()
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.2"
+    compile "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

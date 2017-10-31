@@ -1,13 +1,12 @@
-package org.usfirst.frc.team3863.robot.commands;
+package team3863.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import team3863.robot.RobotMap;
+import team3863.robot.Robot;
 
-import org.usfirst.frc.team3863.robot.Robot;
-import org.usfirst.frc.team3863.robot.RobotMap;
-import org.usfirst.frc.team3863.robot.subsystems.*;
+import static team3863.robot.Robot.drivetrain;
+import static team3863.robot.Robot.oi;
 
-import static org.usfirst.frc.team3863.robot.Robot.drivetrain;
-import static org.usfirst.frc.team3863.robot.Robot.oi;
 
 /**
  * Following Ether's whitepaper: https://www.chiefdelphi.com/media/papers/2426

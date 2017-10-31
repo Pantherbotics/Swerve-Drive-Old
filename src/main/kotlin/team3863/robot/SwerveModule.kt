@@ -1,8 +1,6 @@
-package org.usfirst.frc.team3863.robot
+package team3863.robot
 
 import com.ctre.CANTalon
-import edu.wpi.first.wpilibj.DoubleSolenoid
-import edu.wpi.first.wpilibj.Solenoid
 import kotlinx.coroutines.experimental.launch
 
 
@@ -18,20 +16,20 @@ class SwerveModule
     NeveRest 40 - 280PPR and 1120CPR
 
      */
-(driveMotorID: Int, steeringMotorID: Int, private val isReversed: Boolean,
+(driveMotorID: Int, steeringMotorID: Int, private val offset: Int, private val isReversed: Boolean,
  steerP: Double, steerI: Double, steerD: Double) {
     private val driveMotor: CANTalon
     private val steeringMotor: CANTalon
-    private val zeroed: Boolean = false
     var angleDegrees: Double = 0.0
         set(degrees) {
             field = degrees
+            field += offset
             val set: Double
             if (isReversed) {
-                set = 3360 - 3360 * degrees / 360
+                set = 2940 - 2940 * degrees / 360
                 steeringMotor.set(set)
             } else {
-                set = 3360 * degrees / 360
+                set = 2940 * degrees / 360
                 steeringMotor.set(set)
             }
 
@@ -47,6 +45,7 @@ class SwerveModule
             steeringMotor.enableZeroSensorPositionOnIndex(true, true)      //encoder position is within [0, 3360]
             steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position)
             steeringMotor.setPID(steerP, steerI, steerD)
+            steeringMotor.configEncoderCodesPerRev(28)
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
             zero()
