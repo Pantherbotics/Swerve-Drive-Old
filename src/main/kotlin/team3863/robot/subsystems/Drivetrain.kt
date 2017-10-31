@@ -14,10 +14,10 @@ class Drivetrain : Subsystem() {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-    private val topLeft: SwerveModule
-    private val topRight: SwerveModule
-    private val bottomLeft: SwerveModule
-    private val bottomRight: SwerveModule
+    val topLeft: SwerveModule
+    val topRight: SwerveModule
+    val bottomLeft: SwerveModule
+    val bottomRight: SwerveModule
 
     private val gyro: AnalogGyro
 

@@ -1,7 +1,9 @@
 package team3863.robot
 
 import com.ctre.CANTalon
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import kotlinx.coroutines.experimental.launch
+import team3863.robot.RobotMap
 
 
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -48,8 +50,6 @@ class SwerveModule
             steeringMotor.configEncoderCodesPerRev(28)
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
-            zero()
-
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")
@@ -76,14 +76,29 @@ class SwerveModule
             driveMotor.set(power)
     }
 
-    fun zero(){
-        launch{
-            steeringMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus)
-            while(steeringMotor.encPosition!=0)
-                steeringMotor.set(0.5)
-            steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position)
-            println("Zeroed!")
-        }
+    fun setOpenLoop(){
+        steeringMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus)
     }
 
+    fun setClosedLoop(){
+        steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position)
+    }
+
+    fun setSteerMotor(s : Double){
+        steeringMotor.set(s)
+    }
+
+    val encPosition: Int
+        get() = steeringMotor.encPosition
+
+    val name: String
+        get(){
+            when(steeringMotor.deviceID){
+                12 -> return "Top Right"
+                15 -> return "Top Left"
+                3 -> return "Bot Right"
+                5 -> return "Bot Left"
+                else -> return "idk lol"
+            }
+        }
 }

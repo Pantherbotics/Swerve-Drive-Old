@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team3863.robot.subsystems.PneumaticsCompressor;
 import team3863.subsystems.Drivetrain;
+import team3863.robot.commands.ZeroAll;
 
 
 /**
@@ -83,6 +84,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		compressor.enableCompressor();
 		drivetrain.enableAll();
+		new ZeroAll();
 	}
 
 	/**
