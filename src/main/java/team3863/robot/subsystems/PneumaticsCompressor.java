@@ -1,8 +1,8 @@
-package org.usfirst.frc.team3863.robot.subsystems;
+package team3863.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Compressor;
-import org.usfirst.frc.team3863.robot.RobotMap;
+import team3863.robot.RobotMap;
 
 
 /**
