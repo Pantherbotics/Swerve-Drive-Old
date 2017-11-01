@@ -2,6 +2,7 @@ package team3863.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import team3863.robot.SwerveModule;
+import static team3863.robot.Robot.drivetrain;
 
 /**
  * Created by Aaron on 10/31/2017.
@@ -11,6 +12,7 @@ public class Zero extends Command {
     public Zero(SwerveModule module) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(drivetrain);
         this.module = module;
     }
 
@@ -30,7 +32,7 @@ public class Zero extends Command {
      * scheduled to run until this Command either finishes or is canceled.
      */
     protected void execute() {
-        module.setSteerMotor(0.2);
+        module.setSteerMotor(0.5);
         System.out.println(module.getName() + ": " + module.getEncPosition());
     }
 
