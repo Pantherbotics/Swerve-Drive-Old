@@ -23,7 +23,7 @@ public class Zero extends Command {
      */
     protected void initialize() {
         module.setOpenLoop();
-
+        System.out.println("Starting to Zero...");
     }
 
 
@@ -32,7 +32,7 @@ public class Zero extends Command {
      * scheduled to run until this Command either finishes or is canceled.
      */
     protected void execute() {
-        module.setSteerMotor(0.5);
+        module.setSteerMotor(0.3);
         System.out.println(module.getName() + ": " + module.getEncPosition());
     }
 
@@ -56,7 +56,7 @@ public class Zero extends Command {
      */
     protected boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return module.getEncPosition() < 5;
+        return module.getEncPosition() ==0;
     }
 
 

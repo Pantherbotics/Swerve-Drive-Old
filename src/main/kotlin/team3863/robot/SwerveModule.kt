@@ -50,6 +50,7 @@ class SwerveModule
             steeringMotor.configEncoderCodesPerRev(28)
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
+            steeringMotor.encPosition = 5000
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")

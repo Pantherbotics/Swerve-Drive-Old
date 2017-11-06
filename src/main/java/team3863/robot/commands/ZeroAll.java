@@ -23,9 +23,9 @@ public class ZeroAll extends CommandGroup {
         // A command group will require all of the subsystems that each member would require.
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the arm.
-        addParallel(new Zero(drivetrain.getTopRight()));
-        addParallel(new Zero(drivetrain.getTopLeft()));
-        addParallel(new Zero(drivetrain.getBottomRight()));
-        addParallel(new Zero(drivetrain.getBottomLeft()));
+        addParallel(new Zero(drivetrain.getModules()[0]));
+        addParallel(new Zero(drivetrain.getModules()[1]));
+        addParallel(new Zero(drivetrain.getModules()[2]));
+        addParallel(new Zero(drivetrain.getModules()[3]));
     }
 }

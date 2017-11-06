@@ -3,7 +3,7 @@ package team3863.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
+import team3863.robot.commands.ZeroAll;
 
 
 /**
@@ -41,4 +41,9 @@ public class OI {
 
     public Joystick leftJoy = new Joystick(RobotMap.leftJoy);
     public Joystick rightJoy = new Joystick(RobotMap.rightJoy);
+    public Button butt = new JoystickButton(rightJoy, 5);
+
+    public OI(){
+        butt.whenPressed(new ZeroAll());
+    }
 }
