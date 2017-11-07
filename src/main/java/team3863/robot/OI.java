@@ -3,6 +3,8 @@ package team3863.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import team3863.robot.commands.ShiftHigh;
+import team3863.robot.commands.ShiftLow;
 import team3863.robot.commands.ZeroAll;
 
 
@@ -42,8 +44,12 @@ public class OI {
     public Joystick leftJoy = new Joystick(RobotMap.leftJoy);
     public Joystick rightJoy = new Joystick(RobotMap.rightJoy);
     public Button butt = new JoystickButton(rightJoy, 5);
+    public Button lowGear = new JoystickButton(leftJoy, 1);
+    public Button highGear = new JoystickButton(rightJoy, 1);
 
     public OI(){
         butt.whenPressed(new ZeroAll());
+        lowGear.whenPressed(new ShiftLow());
+        highGear.whenPressed(new ShiftHigh());
     }
 }
