@@ -2,6 +2,7 @@ package team3863.robot
 
 import com.ctre.CANTalon
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import team3863.robot.RobotMap
 
@@ -102,4 +103,13 @@ class SwerveModule
                 else -> return "idk lol"
             }
         }
+
+    fun zero(){
+        launch {
+            setOpenLoop()
+            while (encPosition !=0){
+                setSteerMotor(0.5)
+            }
+        }
+    }
 }

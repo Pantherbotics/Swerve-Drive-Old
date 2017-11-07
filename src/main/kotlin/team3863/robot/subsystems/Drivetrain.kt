@@ -95,6 +95,12 @@ class Drivetrain : Subsystem() {
         return arrayOf(topRight, topLeft, bottomRight, bottomLeft)
     }
 
+    fun zeroAll(){
+        topRight.zero()
+        topLeft.zero()
+        bottomRight.zero()
+        bottomLeft.zero()
+    }
 
 }
 
