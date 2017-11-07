@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem
 import team3863.robot.RobotMap
 import team3863.robot.SwerveModule
 import team3863.robot.commands.Drive
+import edu.wpi.first.wpilibj.ADXRS450_Gyro
+
 
 /**
  * Created by Aaron Fang on 10/7/2017.
@@ -20,7 +22,7 @@ class Drivetrain : Subsystem() {
     val bottomLeft: SwerveModule
     val bottomRight: SwerveModule
 
-    private val gyro: AnalogGyro
+    private val gyro: ADXRS450_Gyro
 
     private val shifter: DoubleSolenoid
 
@@ -38,7 +40,7 @@ class Drivetrain : Subsystem() {
         bottomRight = SwerveModule(RobotMap.botRight_Drive, RobotMap.botRight_Steer, RobotMap.botRight_Offset, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
         bottomLeft = SwerveModule(RobotMap.botLeft_Drive, RobotMap.botLeft_Steer, RobotMap.botLeft_Offset, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
 
-        gyro = AnalogGyro(RobotMap.gyro)
+        gyro = ADXRS450_Gyro()
         gyro.calibrate()
 
 

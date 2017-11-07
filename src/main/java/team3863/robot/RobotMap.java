@@ -1,5 +1,7 @@
 package team3863.robot;
 
+import edu.wpi.first.wpilibj.SPI;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -54,5 +56,5 @@ public class RobotMap {
     public static int leftJoy = 0;
     public static int rightJoy = 1;
 
-    public static int gyro = 1;
+    public static SPI.Port gyro_port = SPI.Port.kOnboardCS0;
 }
