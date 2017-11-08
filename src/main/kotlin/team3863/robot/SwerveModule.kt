@@ -104,6 +104,11 @@ class SwerveModule
             }
         }
 
+    fun setPosition(x : Double){
+        steeringMotor.position = x;
+
+    }
+
     fun zero(){
         launch {
             setOpenLoop()

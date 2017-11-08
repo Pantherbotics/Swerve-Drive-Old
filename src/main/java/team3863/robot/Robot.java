@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		compressor.enableCompressor();
 		drivetrain.enableAll();
-		drivetrain.zeroAll();
+
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class Zero extends Command {
      * scheduled to run until this Command either finishes or is canceled.
      */
     protected void execute() {
-        module.setSteerMotor(0.3);
+        module.setSteerMotor(0.25);
         System.out.println(module.getName() + ": " + module.getEncPosition());
     }
 
@@ -56,7 +56,7 @@ public class Zero extends Command {
      */
     protected boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return module.getEncPosition() ==0;
+        return Math.abs(module.getEncPosition()) < 10;
     }
 
 
