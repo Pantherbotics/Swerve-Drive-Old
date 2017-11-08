@@ -61,7 +61,7 @@ class ShiftHigh : Command() {
      * command.
      */
     override fun end() {
-
+        print("high gear")
     }
 
 

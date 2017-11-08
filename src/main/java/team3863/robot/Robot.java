@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		LiveWindow.run();
 		Scheduler.getInstance().run();
+		System.out.print(drivetrain.getHeadingDegrees());
 	}
 
 	/**

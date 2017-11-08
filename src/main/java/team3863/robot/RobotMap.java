@@ -39,7 +39,7 @@ public class RobotMap {
     
     public static int PCM_ID = 6;
 
-    public static double steer_P = 0.9134;
+    public static double steer_P = 0.5;
     /*
         when the error is 1120, the throttle will be 100%
         the p constant is calculated by (1.0*1023)/1120

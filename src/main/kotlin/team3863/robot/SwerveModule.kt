@@ -104,9 +104,8 @@ class SwerveModule
             }
         }
 
-    fun setPosition(x : Double){
-        steeringMotor.position = x;
-
+    fun setEncPosition(x: Int){
+        steeringMotor.encPosition = x
     }
 
     fun zero(){
