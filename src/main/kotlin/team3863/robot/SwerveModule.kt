@@ -48,10 +48,10 @@ class SwerveModule
             steeringMotor.enableZeroSensorPositionOnIndex(true, true)      //encoder position is within [0, 3360]
             steeringMotor.changeControlMode(CANTalon.TalonControlMode.Position)
             steeringMotor.setPID(steerP, steerI, steerD)
-            steeringMotor.configEncoderCodesPerRev(28)
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
             steeringMotor.encPosition = 5000
+            steeringMotor.inverted = false
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")
@@ -65,6 +65,9 @@ class SwerveModule
     }
 
     fun setAngleRadians(rad: Double) {
+        if(Math.signum(rad) == -1.0){
+            
+        }
         angleDegrees = Math.toDegrees(rad)
     }
 
@@ -116,4 +119,7 @@ class SwerveModule
             }
         }
     }
+
+    val error: Int
+        get() = steeringMotor.closedLoopError
 }

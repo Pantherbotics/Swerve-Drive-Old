@@ -96,6 +96,7 @@ public class Robot extends IterativeRobot {
 		LiveWindow.run();
 		Scheduler.getInstance().run();
 		System.out.print(drivetrain.getHeadingDegrees());
+		SmartDashboard.putNumber("Steer Encoder Error", drivetrain.getTopLeft().getError());
 	}
 
 	/**

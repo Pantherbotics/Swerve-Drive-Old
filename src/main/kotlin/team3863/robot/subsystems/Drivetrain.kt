@@ -50,22 +50,23 @@ class Drivetrain : Subsystem() {
     //set is an array
     fun setTopLeft(set: DoubleArray) {
         topLeft.setWheelPower(set[0])
-        //topLeft.setAngleRadians(set[1])
+        topLeft.setAngleRadians(set[1])
+        System.out.println("Setting Top Left Angle: " + set[1])
     }
 
     fun setTopRight(set: DoubleArray) {
         topRight.setWheelPower(set[0])
-        //topRight.setAngleRadians(set[1])
+        topRight.setAngleRadians(set[1])
     }
 
     fun setBottomLeft(set: DoubleArray) {
         bottomLeft.setWheelPower(set[0])
-        //bottomLeft.setAngleRadians(set[1])
+        bottomLeft.setAngleRadians(set[1])
     }
 
     fun setBottomRight(set: DoubleArray) {
         bottomRight.setWheelPower(set[0])
-        //bottomRight.setAngleRadians(set[1])
+        bottomRight.setAngleRadians(set[1])
     }
 
     val headingDegrees: Double
