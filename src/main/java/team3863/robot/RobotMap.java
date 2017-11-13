@@ -39,7 +39,7 @@ public class RobotMap {
     
     public static int PCM_ID = 6;
 
-    public static double steer_P = 0.5;
+    public static double steer_P = 0.173;
     /*
         when the error is 1120, the throttle will be 100%
         the p constant is calculated by (1.0*1023)/1120
@@ -47,7 +47,7 @@ public class RobotMap {
         1120 = 4x encoder counts
         1023 = max talon output
      */
-    public static double steer_I = 0.0;
+    public static double steer_I = 0.01;
     public static double steer_D = 0.0;
 
     public static int shift_Forward = 0;

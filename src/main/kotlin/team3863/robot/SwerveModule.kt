@@ -30,10 +30,10 @@ class SwerveModule
             val set: Double
             if (isReversed) {
                 set = 2940 - 2940 * degrees / 360
-                steeringMotor.set(set)
+                steeringMotor.set(300.0)
             } else {
                 set = 2940 * degrees / 360
-                steeringMotor.set(set)
+                steeringMotor.set(300.0)
             }
 
         }
@@ -51,7 +51,7 @@ class SwerveModule
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
             steeringMotor.encPosition = 5000
-            steeringMotor.inverted = false
+            steeringMotor.inverted = isReversed
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")
@@ -65,10 +65,11 @@ class SwerveModule
     }
 
     fun setAngleRadians(rad: Double) {
+        var rad2 : Double = rad;
         if(Math.signum(rad) == -1.0){
-            
+             rad2 = 2*Math.PI - rad
         }
-        angleDegrees = Math.toDegrees(rad)
+        angleDegrees = Math.toDegrees(rad2)
     }
 
     val angleRad: Double

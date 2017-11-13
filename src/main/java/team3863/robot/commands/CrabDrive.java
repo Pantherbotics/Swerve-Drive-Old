@@ -1,19 +1,23 @@
 package team3863.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import team3863.robot.SwerveModule;
+
 import static team3863.robot.Robot.drivetrain;
+import static team3863.robot.Robot.oi;
 
 /**
- * Created by Aaron on 10/31/2017.
+ * Created by Aaron on 11/13/2017.
  */
-public class Zero extends Command {
-    SwerveModule module;
-    public Zero(SwerveModule module) {
+public class CrabDrive extends Command {
+
+    private double angle;
+    private double speed;
+    private double[] driveCommand = new double[2];
+
+    public CrabDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(drivetrain);
-        this.module = module;
     }
 
 
@@ -22,8 +26,7 @@ public class Zero extends Command {
      * this Command is run after being started.
      */
     protected void initialize() {
-        module.setOpenLoop();
-        System.out.println("Starting to Zero...");
+
     }
 
 
@@ -32,8 +35,17 @@ public class Zero extends Command {
      * scheduled to run until this Command either finishes or is canceled.
      */
     protected void execute() {
-        module.setSteerMotor(0.25);
-        System.out.println(module.getName() + ": " + module.getEncPosition());
+        angle = oi.leftJoy.getDirectionRadians();
+        speed = oi.leftJoy.getMagnitude();
+        driveCommand[0] = speed;
+        driveCommand[1] = angle;
+
+        System.out.println(speed);
+        System.out.println(angle);
+        drivetrain.setBottomLeft(driveCommand);
+        drivetrain.setBottomRight(driveCommand);
+        drivetrain.setTopLeft(driveCommand);
+        drivetrain.setTopRight(driveCommand);
     }
 
 
@@ -56,7 +68,7 @@ public class Zero extends Command {
      */
     protected boolean isFinished() {
         // TODO: Make this return true when this Command no longer needs to run execute()
-        return Math.abs(module.getEncPosition()) < 10;
+        return false;
     }
 
 
@@ -67,7 +79,7 @@ public class Zero extends Command {
      * command.
      */
     protected void end() {
-        module.setClosedLoop();
+
     }
 
 

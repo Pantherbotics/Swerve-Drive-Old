@@ -8,6 +8,7 @@ import team3863.robot.RobotMap
 import team3863.robot.SwerveModule
 import team3863.robot.commands.Drive
 import edu.wpi.first.wpilibj.ADXRS450_Gyro
+import team3863.robot.commands.CrabDrive
 
 
 /**
@@ -31,7 +32,7 @@ class Drivetrain : Subsystem() {
 
 
     public override fun initDefaultCommand() {
-        defaultCommand = Drive()
+        defaultCommand = CrabDrive();
     }
 
     init {
