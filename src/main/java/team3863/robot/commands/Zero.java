@@ -67,6 +67,8 @@ public class Zero extends Command {
      * command.
      */
     protected void end() {
+        module.setSteerMotor(0);
+        module.setEncPosition(0);
         module.setClosedLoop();
     }
 

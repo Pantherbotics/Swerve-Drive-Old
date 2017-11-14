@@ -52,6 +52,7 @@ class SwerveModule
             //steeringMotor.startLiveWindowMode();
             steeringMotor.encPosition = 5000
             steeringMotor.inverted = isReversed
+            steeringMotor.reverseSensor = true;
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")
