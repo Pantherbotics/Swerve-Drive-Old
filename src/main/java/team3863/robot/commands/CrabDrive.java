@@ -1,6 +1,7 @@
 package team3863.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static team3863.robot.Robot.drivetrain;
 import static team3863.robot.Robot.oi;
@@ -42,10 +43,13 @@ public class CrabDrive extends Command {
 
         System.out.println(speed);
         System.out.println(angle);
+
+        SmartDashboard.putNumber("Encoder Error", drivetrain.getBottomLeft().getError());
         drivetrain.setBottomLeft(driveCommand);
         drivetrain.setBottomRight(driveCommand);
         drivetrain.setTopLeft(driveCommand);
         drivetrain.setTopRight(driveCommand);
+
     }
 
 

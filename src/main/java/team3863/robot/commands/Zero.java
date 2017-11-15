@@ -24,6 +24,7 @@ public class Zero extends Command {
     protected void initialize() {
         module.setOpenLoop();
         System.out.println("Starting to Zero...");
+        module.zeroOnIndex(true);
     }
 
 
@@ -70,6 +71,7 @@ public class Zero extends Command {
         module.setSteerMotor(0);
         module.setEncPosition(0);
         module.setClosedLoop();
+        module.zeroOnIndex(false);
     }
 
 

@@ -26,14 +26,14 @@ class SwerveModule
     var angleDegrees: Double = 0.0
         set(degrees) {
             field = degrees
-            field += offset
+            field += 180
             val set: Double
             if (isReversed) {
-                set = 2940 - 2940 * degrees / 360
-                steeringMotor.set(300.0)
+                set = (2940 - 2940 * degrees / 360)%2940
+                steeringMotor.set(set)
             } else {
-                set = 2940 * degrees / 360
-                steeringMotor.set(300.0)
+                set = (2940 * degrees / 360)%2940
+                steeringMotor.set(set)
             }
 
         }
@@ -52,7 +52,7 @@ class SwerveModule
             //steeringMotor.startLiveWindowMode();
             steeringMotor.encPosition = 5000
             steeringMotor.inverted = isReversed
-            steeringMotor.reverseSensor = true;
+            steeringMotor.reverseSensor(true);
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else
             println("ERROR: Encoder on CANTalon: $steeringMotorID is not detected. Verify that all wires are plugged in securely. ")
@@ -124,4 +124,8 @@ class SwerveModule
 
     val error: Int
         get() = steeringMotor.closedLoopError
+
+    fun zeroOnIndex(x: Boolean){
+        steeringMotor.enableZeroSensorPositionOnIndex(x, true)
+    }
 }
