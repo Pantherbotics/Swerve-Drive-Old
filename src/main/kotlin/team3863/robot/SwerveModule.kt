@@ -26,17 +26,19 @@ class SwerveModule
     var angleDegrees: Double = 0.0
         set(degrees) {
             field = degrees
-            field += 180
+            val off = 2940 * offset/360
             val set: Double
             if (isReversed) {
-                set = (2940 - 2940 * degrees / 360)%2940
+                set = (off+(2940 - 2940 * degrees / 360))%2940
                 steeringMotor.set(set)
             } else {
-                set = (2940 * degrees / 360)%2940
+                set = (off+(2940 * degrees / 360))%2940
                 steeringMotor.set(set)
             }
 
         }
+
+
     private val speed: Double = 0.toDouble()
 
     init {
@@ -51,7 +53,7 @@ class SwerveModule
             //LiveWindow.addActuator("SwerveDrive", "steeringMotor-", steeringMotor);
             //steeringMotor.startLiveWindowMode();
             steeringMotor.encPosition = 5000
-            steeringMotor.inverted = isReversed
+            //steeringMotor.inverted = isReversed
             steeringMotor.reverseSensor(true);
             println("DEBUG: Encoder and PID settings for CANTalon: $steeringMotorID have been applied")
         } else

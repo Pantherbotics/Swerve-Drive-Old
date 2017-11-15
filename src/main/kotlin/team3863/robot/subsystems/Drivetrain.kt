@@ -38,8 +38,8 @@ class Drivetrain : Subsystem() {
     init {
         topLeft = SwerveModule(RobotMap.topLeft_Drive, RobotMap.topLeft_Steer, RobotMap.topLeft_Offset, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
         topRight = SwerveModule(RobotMap.topRight_Drive, RobotMap.topRight_Steer, RobotMap.topRight_Offset, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
-        bottomRight = SwerveModule(RobotMap.botRight_Drive, RobotMap.botRight_Steer, RobotMap.botRight_Offset, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
-        bottomLeft = SwerveModule(RobotMap.botLeft_Drive, RobotMap.botLeft_Steer, RobotMap.botLeft_Offset, true, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
+        bottomRight = SwerveModule(RobotMap.botRight_Drive, RobotMap.botRight_Steer, RobotMap.botRight_Offset, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
+        bottomLeft = SwerveModule(RobotMap.botLeft_Drive, RobotMap.botLeft_Steer, RobotMap.botLeft_Offset, false, RobotMap.steer_P, RobotMap.steer_I, RobotMap.steer_D)
 
         gyro = ADXRS450_Gyro()
         gyro.calibrate()

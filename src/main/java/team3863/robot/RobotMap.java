@@ -32,14 +32,14 @@ public class RobotMap {
     public static int botLeft_Drive = 4;
     public static int botLeft_Steer = 5;
 
-    public static int topRight_Offset = 90;
-    public static int topLeft_Offset = 45;
-    public static int botRight_Offset = 45;
-    public static int botLeft_Offset = 45;
+    public static int topRight_Offset = 0;
+    public static int topLeft_Offset = 0;
+    public static int botRight_Offset = 0;
+    public static int botLeft_Offset = 0;
     
     public static int PCM_ID = 6;
 
-    public static double steer_P = 0.6;
+    public static double steer_P = 0.9;
     /*
         when the error is 1120, the throttle will be 100%
         the p constant is calculated by (1.0*1023)/1120
@@ -47,7 +47,7 @@ public class RobotMap {
         1120 = 4x encoder counts
         1023 = max talon output
      */
-    public static double steer_I = 0.0005;
+    public static double steer_I = 0.0003;
     public static double steer_D = 0.0;
 
     public static int shift_Forward = 0;
