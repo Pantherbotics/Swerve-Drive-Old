@@ -25,14 +25,13 @@ class SwerveModule
     private val steeringMotor: CANTalon
     var angleDegrees: Double = 0.0
         set(degrees) {
-            field = degrees
-            val off = 2940 * offset/360
             val set: Double
+            val offsetDegrees = offset + degrees
             if (isReversed) {
-                set = (off+(2940 - 2940 * degrees / 360))%2940
+                set = ((2940 - 2940 * offsetDegrees / 360))%2940
                 steeringMotor.set(set)
             } else {
-                set = (off+(2940 * degrees / 360))%2940
+                set = ((2940 * offsetDegrees / 360))%2940
                 steeringMotor.set(set)
             }
 
