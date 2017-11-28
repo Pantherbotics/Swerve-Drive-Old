@@ -32,9 +32,9 @@ public class RobotMap {
     public static int botLeft_Drive = 4;
     public static int botLeft_Steer = 5;
 
-    public static int topRight_Offset = 135;
+    public static int topRight_Offset = 135+180;
     public static int topLeft_Offset = 45;
-    public static int botRight_Offset = 45;
+    public static int botRight_Offset = 45+180;
     public static int botLeft_Offset = 45;
     
     public static int PCM_ID = 6;
