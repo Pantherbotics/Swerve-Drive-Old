@@ -18,14 +18,15 @@ public class SwerveModule{
         mSteering.config_kF(Constants.kPIDLoopIdx, 0.0, Constants.kTimeoutMs);
 		mSteering.config_kP(Constants.kPIDLoopIdx, Constants.kSwerveP, Constants.kTimeoutMs);
 		mSteering.config_kI(Constants.kPIDLoopIdx, Constants.kSwerveI, Constants.kTimeoutMs);
-		mSteering.config_kD(Constants.kPIDLoopIdx, Constants.kSwerveD, Constants.kTimeoutMs);
+        mSteering.config_kD(Constants.kPIDLoopIdx, Constants.kSwerveD, Constants.kTimeoutMs);
+        mSteering.configAllowableClosedloopError(10, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     }
     public int getDriveEncoder(){
         return (mDrive.getSelectedSensorVelocity(0));
     }
     public int getSteeringEncoder(){
-        return (int)(Math.abs(mSteering.getSelectedSensorPosition(0)));
-        //return (int)(((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - 156) * (1023.0/822.0));
+        //return (int)(Math.abs(mSteering.getSelectedSensorPosition(0)));
+        return (int)(((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - 156) * (1023.0/822.0));
     }
     public void setDrive(double power){
         mDrive.set(ControlMode.PercentOutput, power);

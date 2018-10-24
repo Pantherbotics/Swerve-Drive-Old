@@ -11,7 +11,7 @@ public class Constants{
     public static int kTestButtton = 4;
     public static int kLeftYAxis = 1;
     //PID
-    public static double kSwerveP = 0.09; 
+    public static double kSwerveP = 0.3; 
     public static double kSwerveI = 0;
     public static double kSwerveD = 0;
     public static int kPIDLoopIdx = 0;

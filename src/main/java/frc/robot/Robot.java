@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import javax.swing.text.Position;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -90,11 +93,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    module.setSteering(900);
-    System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());
+    double positionValue = 1000;
+    module.setSteering(positionValue);
+    //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
+    //System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());
     Scheduler.getInstance().run();
-    //System.out.println(SwerveModule.convertDegressToTicks(oi.getLeftAngle()));
-    //System.out.println(module.getSteeringEncoder());
   }
 
   /**
