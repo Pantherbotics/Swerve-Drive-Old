@@ -40,7 +40,7 @@ public class SwerveModule{
         }
         mSteering.set(ControlMode.Position, pos);
     }
-    public static int convertDegressToTicks(double angle){
+    public int convertDegressToTicks(double angle){
         int out;
         out = (((int)angle + 180) * 1023/360);
         return out;
