@@ -8,9 +8,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.SetMotorSpeed;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -26,6 +28,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static final Drivetrain kDrivetrain = new Drivetrain();
+  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID);
   public OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
@@ -89,8 +92,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //Command c = new GoToEncoderPos(100, module);
-    //c.start();
+    Command c = new SetMotorSpeed(oi.stick.getMagnitude(), module);
+    c.start();
     Scheduler.getInstance().run();
     //System.out.println(module.getSteeringEncoder());
   }

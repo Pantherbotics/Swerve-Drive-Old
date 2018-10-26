@@ -1,12 +1,12 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.SwerveModule;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class SetMotorSpeed extends Command{
-double speed;
+public class MotorPower extends Command{
+double getMagnitude;
 SwerveModule module;
-    public SetMotorSpeed(double speedGiven, SwerveModule swerveModule) {
-        this.speed = speedGiven; 
+    public MotorPower(double Magnitude,  SwerveModule swerveModule) {
+        this.getMagnitude = Magnitude; 
         this.module = swerveModule;
     }
     
@@ -14,17 +14,16 @@ SwerveModule module;
     
     }
     protected void execute() {
-        module.setDrive(speed);
+        module.setDrive(getMagnitude);
     }
     
     protected boolean isFinished() {
-        return false;
+        return true;
     }
     protected void end() {
-        module.setDrive(0);
     
     };
     protected void interrupted() {
-        module.setDrive(0);
+    
     }
-    }
+}
