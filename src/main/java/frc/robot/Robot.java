@@ -94,10 +94,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Command c = new setMotorSpeed(oi.stick.getY(), module);
+    Command c = new setMotorSpeed(oi.stick.getMagnitude(), module);
     c.start();
-    //double positionValue = 160;
-    //module.setSteering(positionValue);
+    module.setSteering(module.convertDegressToTicks(oi.getLeftAngle()));
     System.out.println("CurrentPos:" + module.getSteeringEncoder() + " Error:" + module.getSteeringError());
     //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
     //System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());

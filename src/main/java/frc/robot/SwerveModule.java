@@ -35,10 +35,10 @@ public class SwerveModule{
     }
     public void setSteering(double pos){
         int steeringEncoder = getSteeringEncoder();
-        if (steeringEncoder > 1023) {
-            mSteering.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+        if (steeringEncoder > 1023 || steeringEncoder < 0) {
+            mSteering.setSelectedSensorPosition(Math.abs(getSteeringEncoder()%1023), Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         }
-        mSteering.set(ControlMode.Position, 100);
+        mSteering.set(ControlMode.Position, pos);
     }
     public static int convertDegressToTicks(double angle){
         int out;
