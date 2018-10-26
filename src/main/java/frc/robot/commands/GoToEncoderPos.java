@@ -10,7 +10,6 @@ public class GoToEncoderPos extends Command {
   public GoToEncoderPos(int pos, SwerveModule module){
     this.mymodule = module;
     this.setpoint = pos;
-    System.out.println("Setpoint: " + setpoint);
     sumError = 0;
     lastError = getError();
     CurrentError = lastError;
@@ -44,12 +43,13 @@ public class GoToEncoderPos extends Command {
     double output = (Constants.kSwerveP * getError() + Constants.kSwerveI * sumError - Constants.kSwerveD * changeInError);
     mymodule.setSteering(output);
     //System.out.println("Error: " +getError()+ " Pos:" +mymodule.getSteeringEncoder()+" Setpoint"+setpoint);
-    System.out.println(mymodule.getSteeringEncoder());
+    System.out.println("Pos:" + mymodule.getSteeringEncoder());
+    //System.out.println(mymodule.getSteeringEncoder());
   }
 
   @Override
   protected boolean isFinished() {
-    return Math.abs(getError()) < 30;
+    return Math.abs(getError()) < 10;
   }
 
   @Override

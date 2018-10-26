@@ -11,10 +11,10 @@ public class Constants{
     public static int kSetMotorSpeed = 0;
 
     //PID
-    public static double kSwerveP = 8; 
+    public static double kSwerveP = 0.004; 
     public static double kSwerveI = 0;
     public static double kSwerveD = 0;
-    public static int kPIDLoopIdx = 0;
-    public static int kTimeoutMs = 30;
+    //public static int kPIDLoopIdx = 0;
+    //public static int kTimeoutMs = 30;
 }
 

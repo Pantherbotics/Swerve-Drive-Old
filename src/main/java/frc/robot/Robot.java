@@ -99,7 +99,6 @@ public class Robot extends TimedRobot {
     drive.start();
     Command steer = new GoToEncoderPos(module.convertDegressToTicks(oi.getLeftAngle()), module);
     steer.start();
-    System.out.println("CurrentPos:" + module.getSteeringEncoder() + " Error:" + module.getSteeringError());
     //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
     //System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());
     Scheduler.getInstance().run();
