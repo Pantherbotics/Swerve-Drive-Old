@@ -4,7 +4,7 @@ import frc.robot.Constants;
 import frc.robot.SwerveModule;
 
 public class Drivetrain extends Subsystem {
-  private SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID);
+  private SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
   public Drivetrain(){
   }
   @Override

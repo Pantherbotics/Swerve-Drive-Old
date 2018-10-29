@@ -14,7 +14,7 @@ SwerveModule module;
     
     }
     protected void execute() {
-        module.setDrive(getMagnitude);
+        module.setDrivePower(getMagnitude);
     }
     
     protected boolean isFinished() {

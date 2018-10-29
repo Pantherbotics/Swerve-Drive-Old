@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static final Drivetrain kDrivetrain = new Drivetrain();
-  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID);
+  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
   public OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
@@ -96,10 +96,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Command c = new setMotorSpeed(oi.stick.getMagnitude(), module);
     c.start();
-    module.setSteering(module.convertDegressToTicks(oi.getLeftAngle()));
-    System.out.println("CurrentPos:" + module.getSteeringEncoder() + " Error:" + module.getSteeringError());
+    module.setSteeringDegrees(oi.getLeftAngle());
     //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
-    //System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());
+    System.out.println("Steering Position (Degrees): "+ module.getSteeringDegrees()+" Steering Error:"+ Math.toDegrees(module.getError()));
     Scheduler.getInstance().run();
   }
 
