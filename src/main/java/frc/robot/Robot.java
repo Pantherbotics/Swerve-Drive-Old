@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.
 import frc.robot.commands.GoToEncoderPos;
-import frc.robot.commands.setMotorSpeed;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**

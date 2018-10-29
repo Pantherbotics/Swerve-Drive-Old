@@ -1,9 +1,18 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Notifier;
+import com.ctre.phoenix.ParamEnum;
 
 public class SwerveModule{
     private TalonSRX mDrive, mSteering;
+    private double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
+    private boolean isReversed;
+
+    private static final double dt = 0.01;  //this is how fast we run our PID loop.
+    private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
+    private static final double ROTATION_SENSOR_MAX = 822;  //and this
     
     public SwerveModule(int kSteeringID, int kDriveID){
         mDrive = new TalonSRX(kDriveID);
