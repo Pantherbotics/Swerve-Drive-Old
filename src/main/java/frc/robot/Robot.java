@@ -14,9 +14,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.
-import frc.robot.commands.GoToEncoderPos;
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
