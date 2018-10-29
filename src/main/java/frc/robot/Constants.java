@@ -11,8 +11,8 @@ public class Constants{
     public static int kSetMotorSpeed = 0;
 
     //PID
-    public static double kSwerveP = 0.4; 
-    public static double kSwerveI = 0.1;
+    public static double kSwerveP = 0.3; //4
+    public static double kSwerveI = 0;
     public static double kSwerveD = 0;
 
     public static int kPIDLoopIdx = 0;

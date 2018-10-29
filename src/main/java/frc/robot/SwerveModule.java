@@ -30,8 +30,8 @@ public class SwerveModule{
             currentError = getModifiedError();  //update the current error to the most recent one
             sumError += currentError;
             errorChange = lastError - currentError;
-            pidOutput = kP * currentError + kI * sumError * dt + kD * errorChange/dt; //you guys know this, or at least you better...
-            mSteering.set(ControlMode.PercentOutput, pidOutput);
+            pidOutput = kP * currentError + kI * sumError * dt - kD * errorChange/dt; //you guys know this, or at least you better...
+            //mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
         });
 
@@ -57,6 +57,7 @@ public class SwerveModule{
     }
     public double getSteeringRadians(){
         //return (mSteering.getSelectedSensorPosition(0));
+        System.out.println(getSteeringRadians());
         return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2*Math.PI/ROTATION_SENSOR_MAX)) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
     }
 
@@ -70,6 +71,7 @@ public class SwerveModule{
 
     public double getModifiedError(){
         return Math.sin(getError());
+        //return getError();
     }
 
     public void setDrivePower(double power){
