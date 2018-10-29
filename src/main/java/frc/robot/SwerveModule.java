@@ -2,11 +2,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-//import java.security.Principal;
-
 import edu.wpi.first.wpilibj.Notifier;
-
-import com.ctre.phoenix.ParamEnum;
 
 public class SwerveModule{
     private TalonSRX mDrive, mSteering;
@@ -34,7 +30,8 @@ public class SwerveModule{
             currentError = getModifiedError();  //update the current error to the most recent one
             sumError += currentError;
             errorChange = lastError - currentError;
-            pidOutput = kP * currentError + kI * sumError * dt + kD * errorChange; //you guys know this, or at least you better...
+            pidOutput = kP * currentError + kI * sumError * dt + kD * errorChange/dt; //you guys know this, or at least you better...
+            mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
         });
 
@@ -95,5 +92,4 @@ public class SwerveModule{
     public void setSteeringRadians(double rad){
         setpoint = rad;
     }
-
 }
