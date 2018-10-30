@@ -10,7 +10,7 @@ public class SwerveModule{
     private double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
     private boolean isReversed;
 
-    private static final double dt = 0.01;  //this is how fast we run our PID loop.
+    private static final double dt = 0.005;  //this is how fast we run our PID loop.
     private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
     private static final double ROTATION_SENSOR_MAX = 822;  //and this
     
@@ -70,8 +70,15 @@ public class SwerveModule{
     }
 
     public double getModifiedError(){
-        return Math.sin(getError());
-        //return getError();
+        double errorOne = getError();
+        double errorTwo = 0;
+        if(errorOne > 0){
+            errorTwo = errorOne-Math.PI * 2;
+        }else{
+            errorTwo = errorOne + Math.PI * 2;
+        }
+
+        return errorOne < errorTwo ? errorOne : errorTwo;
     }
 
     public void setDrivePower(double power){
