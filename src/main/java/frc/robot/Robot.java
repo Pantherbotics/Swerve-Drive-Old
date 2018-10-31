@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.commands.*;
+import frc.robot.commands.GoToEncoderPos;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -95,8 +95,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Command drive = new setMotorSpeed(oi.stick.getMagnitude(), module);
-    drive.start();
     Command steer = new GoToEncoderPos(module.convertDegressToTicks(oi.getLeftAngle()), module);
+    drive.start();
     steer.start();
     //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
     //System.out.println("Pos:"+ module.getSteeringEncoder()+" steeringError:"+module.getSteeringError());
