@@ -7,12 +7,13 @@ import edu.wpi.first.wpilibj.Notifier;
 public class SwerveModule{
     private TalonSRX mDrive, mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
-    private double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
+    private volatile double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
     private boolean isReversed;
 
-    private static final double dt = 0.005;  //this is how fast we run our PID loop.
+    private static final double dt = 0.01;  //this is how fast we run our PID loop.
     private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
-    private static final double ROTATION_SENSOR_MAX = 822;  //and this
+    private static final double ROTATION_SENSOR_MAX = 978;  //and this
+    private static final double TAU = 2*Math.PI;
     
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
@@ -31,8 +32,10 @@ public class SwerveModule{
             sumError += currentError;
             errorChange = lastError - currentError;
             pidOutput = kP * currentError + kI * sumError * dt - kD * errorChange/dt; //you guys know this, or at least you better...
-            //mSteering.set(ControlMode.PercentOutput, pidOutput);
+            mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
+            
+
         });
 
         this.isReversed = isReversed;
@@ -57,10 +60,13 @@ public class SwerveModule{
     }
     public double getSteeringRadians(){
         //return (mSteering.getSelectedSensorPosition(0));
-        System.out.println(getSteeringRadians());
-        return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2*Math.PI/ROTATION_SENSOR_MAX)) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
+        //System.out.println(getSteeringRadians());
+        return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
     }
 
+    public double getSteeringOutput(){
+        return pidOutput;
+    }
     public double getSteeringDegrees(){
         return Math.toDegrees(getSteeringRadians());
     }
@@ -70,15 +76,9 @@ public class SwerveModule{
     }
 
     public double getModifiedError(){
-        double errorOne = getError();
-        double errorTwo = 0;
-        if(errorOne > 0){
-            errorTwo = errorOne-Math.PI * 2;
-        }else{
-            errorTwo = errorOne + Math.PI * 2;
-        }
-
-        return errorOne < errorTwo ? errorOne : errorTwo;
+        //return boundHalfRadians(getError());
+        return getError();
+        
     }
 
     public void setDrivePower(double power){
@@ -101,4 +101,28 @@ public class SwerveModule{
     public void setSteeringRadians(double rad){
         setpoint = rad;
     }
+
+    public double getSetpointRadians(){
+        return setpoint;
+    }
+
+    public double getSetpointDegrees(){
+        return Math.toDegrees(setpoint);
+    }
+
+    private double boundHalfDegrees(double angle_degrees) {
+
+        while (angle_degrees >= 180.0) angle_degrees -= 360.0;
+
+        while (angle_degrees < -180.0) angle_degrees += 360.0;
+
+        return angle_degrees;
+
+    }
+
+    private double boundHalfRadians(double radians){
+        return Math.toRadians(boundHalfDegrees(Math.toDegrees(radians)));
+    }
+
+
 }
