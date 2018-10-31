@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.setMotorSpeed;
-import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.SwerveModule;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,8 +27,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  public static final Drivetrain kDrivetrain = new Drivetrain();
-  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
+  public static final SwerveModule module = new SwerveModule();
   public OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
@@ -94,15 +91,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Command c = new setMotorSpeed(oi.stick.getMagnitude(), module);
-    c.start();
-    module.setSteeringDegrees(90);
-    //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
-    //System.out.println("Steering Position (Degrees): "+ module.getSteeringDegrees()+" Steering Error:"+ Math.toDegrees(module.getError()));
-    SmartDashboard.putNumber("Steering Error", module.getModifiedError());
-    SmartDashboard.putNumber("Steering Position", module.getSteeringRadians());
-    SmartDashboard.putNumber("Steering Setpoint", module.getSetpointRadians());
-    SmartDashboard.putNumber("Steering Output", module.getSteeringOutput());
     Scheduler.getInstance().run();
   }
 
@@ -111,5 +99,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+
   }
 }

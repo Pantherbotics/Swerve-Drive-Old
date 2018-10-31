@@ -6,16 +6,10 @@ public class Constants{
     public static int kSteeringID = 1;
     //Buttons/Joystick
     public static int kJoyStick = 0;
-    public static int kJoystickLeft = 1;
-    public static int kToggleDrive = 4;
-    public static int kSetMotorSpeed = 0;
-
-    //PID
-    public static double kSwerveP = 0.5;
-    public static double kSwerveI = 0.;
-    public static double kSwerveD = 0;
+    public static int kDriveForward = 4;
+    public static int kDriveBackward = 2;
 
     public static int kPIDLoopIdx = 0;
-    public static int kTimeoutMs = 30;
+    public static int kTimeoutMs = 10;
 }
 
