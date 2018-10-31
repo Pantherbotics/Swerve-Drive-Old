@@ -4,8 +4,11 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.AnalogInput;
+
 
 public class SwerveModule{
+    private AnalogInput SteeringAnalog = new AnalogInput(0);
     private TalonSRX mDrive, mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
     private volatile double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
