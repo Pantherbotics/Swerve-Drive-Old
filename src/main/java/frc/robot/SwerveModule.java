@@ -1,6 +1,7 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
 
@@ -13,11 +14,11 @@ public class SwerveModule{
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
     private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
     private static final double ROTATION_SENSOR_MAX = 978;  //and this
-    private static final double TAU = 2*Math.PI;
     
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
+        mSteering.setStatusFramePeriod(StatusFrameEnhanced.Status_8_PulseWidth, 1, 10);
         mSteering.setInverted(false);
         mSteering.setSensorPhase(true);
         mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -76,8 +77,8 @@ public class SwerveModule{
     }
 
     public double getModifiedError(){
-        //return boundHalfRadians(getError());
-        return getError();
+        return boundHalfRadians(getError());
+        //return getError();
         
     }
 
