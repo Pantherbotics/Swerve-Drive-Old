@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 
 public class SwerveModule{
-    private AnalogInput SteeringAnalog = new AnalogInput(0);
+    //private AnalogInput SteeringAnalog = new AnalogInput(0);
     private TalonSRX mDrive, mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
     private volatile double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
@@ -43,9 +43,9 @@ public class SwerveModule{
     
         pidLoop = new Notifier(() -> {
             currentError = getModifiedError();  //update the current error to the most recent one
-            sumError += currentError;
-            errorChange = lastError - currentError;
-            pidOutput = kP * currentError + kI * sumError * dt - kD * errorChange/dt; //you guys know this, or at least you better...
+            sumError += currentError * dt;
+            errorChange = currentError-lastError;
+            pidOutput = kP * currentError + kI * sumError + kD * errorChange/dt; //you guys know this, or at least you better...
             mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
         });

@@ -53,6 +53,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Steering Error", module.getModifiedError());
+    SmartDashboard.putNumber("Steering Position", module.getSteeringRadians());
+    SmartDashboard.putNumber("Steering Setpoint", module.getSetpointRadians());
+    SmartDashboard.putNumber("Steering Output", module.getSteeringOutput());
   }
 
   /**
@@ -96,13 +100,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Command c = new setMotorSpeed(oi.stick.getMagnitude(), module);
     c.start();
-    module.setSteeringDegrees(90);
+    module.setSteeringDegrees(500);
     //System.out.println(module.convertDegressToTicks(oi.getLeftAngle()));
     //System.out.println("Steering Position (Degrees): "+ module.getSteeringDegrees()+" Steering Error:"+ Math.toDegrees(module.getError()));
-    SmartDashboard.putNumber("Steering Error", module.getModifiedError());
-    SmartDashboard.putNumber("Steering Position", module.getSteeringRadians());
-    SmartDashboard.putNumber("Steering Setpoint", module.getSetpointRadians());
-    SmartDashboard.putNumber("Steering Output", module.getSteeringOutput());
     Scheduler.getInstance().run();
   }
 

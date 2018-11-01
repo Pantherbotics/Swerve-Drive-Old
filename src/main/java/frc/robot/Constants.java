@@ -13,7 +13,7 @@ public class Constants{
     //PID
     public static double kSwerveP = 0.5;
     public static double kSwerveI = 0.;
-    public static double kSwerveD = 0;
+    public static double kSwerveD = 0.1;
 
     public static int kPIDLoopIdx = 0;
     public static int kTimeoutMs = 30;
