@@ -44,26 +44,12 @@ public class SwerveModule{
         this.isReversed = isReversed;
 
         pidLoop.startPeriodic(dt);
-        /*
-        mSteering.configSetParameter(ParamEnum.eFeedbackNotContinuous, 0, 0x00, 0x00, 0x00);
-        mSteering.config_kF(Constants.kPIDLoopIdx, 0.0, Constants.kTimeoutMs);
-		mSteering.config_kP(Constants.kPIDLoopIdx, Constants.kSwerveP, Constants.kTimeoutMs);
-		mSteering.config_kI(Constants.kPIDLoopIdx, Constants.kSwerveI, Constants.kTimeoutMs);
-        mSteering.config_kD(Constants.kPIDLoopIdx, Constants.kSwerveD, Constants.kTimeoutMs);
-        mSteering.configAllowableClosedloopError(30, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        */
-
-        /** so basically we don't want to use the Talon SRX PID stuff for continuous rotation because it's garbage FOR THAT PURPOSE, since it doesn't handle
-         * crossing that boundary condition very well. We can still use it for our velocity PID on our drive motor because in that case there is no discontinuous
-         * jump for the TalonSRX to get tripped up on -AF
-         */
     }
     public int getDriveEncoder(){
         return (mDrive.getSelectedSensorVelocity(0));
     }
+    
     public double getSteeringRadians(){
-        //return (mSteering.getSelectedSensorPosition(0));
-        //System.out.println(getSteeringRadians());
         return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
     }
 
@@ -88,7 +74,7 @@ public class SwerveModule{
         else
             mDrive.set(ControlMode.PercentOutput, power);
     }
-    
+
     public void setSteeringDegrees(double deg){
         setpoint = Math.toRadians(deg);
     }
