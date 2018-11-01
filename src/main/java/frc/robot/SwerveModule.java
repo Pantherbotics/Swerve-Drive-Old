@@ -1,6 +1,7 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
@@ -21,7 +22,7 @@ public class SwerveModule{
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
-        mSteering.setStatusFramePeriod(StatusFrameEnhanced.Status_8_PulseWidth, 1, 10);
+        mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
         mSteering.setInverted(false);
         mSteering.setSensorPhase(true);
         mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -38,8 +39,6 @@ public class SwerveModule{
             pidOutput = kP * currentError + kI * sumError * dt - kD * errorChange/dt; //you guys know this, or at least you better...
             mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
-            
-
         });
 
         this.isReversed = isReversed;
@@ -81,8 +80,6 @@ public class SwerveModule{
 
     public double getModifiedError(){
         return boundHalfRadians(getError());
-        //return getError();
-        
     }
 
     public void setDrivePower(double power){
@@ -91,15 +88,9 @@ public class SwerveModule{
         else
             mDrive.set(ControlMode.PercentOutput, power);
     }
+    
     public void setSteeringDegrees(double deg){
         setpoint = Math.toRadians(deg);
-        /** 
-        int steeringEncoder = getSteeringEncoder();
-        if (steeringEncoder > 1023 || steeringEncoder < 0) {
-            mSteering.setSelectedSensorPosition(Math.abs(getSteeringEncoder()%1023), Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        }
-        mSteering.set(ControlMode.Position, pos);
-        */
     }
 
     public void setSteeringRadians(double rad){
@@ -114,19 +105,9 @@ public class SwerveModule{
         return Math.toDegrees(setpoint);
     }
 
-    private double boundHalfDegrees(double angle_degrees) {
-
-        while (angle_degrees >= 180.0) angle_degrees -= 360.0;
-
-        while (angle_degrees < -180.0) angle_degrees += 360.0;
-
-        return angle_degrees;
-
-    }
-
     private double boundHalfRadians(double radians){
-        return Math.toRadians(boundHalfDegrees(Math.toDegrees(radians)));
+        while(radians >= Math.PI) radians -=2*Math.PI;
+        while(radians < -Math.PI) radians +=2*Math.PI;
+        return radians;
     }
-
-
 }
