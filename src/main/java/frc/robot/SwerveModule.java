@@ -19,6 +19,15 @@ public class SwerveModule{
     private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
     private static final double ROTATION_SENSOR_MAX = 978;  //and this
     
+    /**
+     * 
+     * @param kSteeringID   the ID of the steering motor
+     * @param kDriveID      the ID of the drive motor
+     * @param isReversed    if the module is physically reversed on the robot
+     * @param kP            the steering kP gain
+     * @param kI            the steering kI gain
+     * @param kD            the steering kD gain
+     */
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
@@ -45,29 +54,58 @@ public class SwerveModule{
 
         pidLoop.startPeriodic(dt);
     }
+
+    /**@return  the velocity of the wheel, measured in ticks/100ms
+     * 
+     */
     public int getDriveEncoder(){
         return (mDrive.getSelectedSensorVelocity(0));
     }
-    
+
+    /**
+     * @return  the angle of the wheel, where angle is an element of [-pi, pi]
+     */
+
     public double getSteeringRadians(){
         return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
     }
 
+    /**
+     * 
+     * @return  the closed-loop PID output, calculated by PID loop
+     */
     public double getSteeringOutput(){
         return pidOutput;
     }
+
+    /**
+     * 
+     * @return the angle of the wheel, where angle is an element of [-180, 180]
+     */
     public double getSteeringDegrees(){
         return Math.toDegrees(getSteeringRadians());
     }
 
+    /**
+     * 
+     * @return  the unbounded steering error, in radians
+     */
     public double getError(){
         return setpoint - getSteeringRadians();
     }
 
+    /**
+     * 
+     * @return  the steering error bounded to [-pi, pi]
+     */
     public double getModifiedError(){
         return boundHalfRadians(getError());
     }
 
+    /**
+     * 
+     * @param power the power of the wheel, where power is [-1.0, 1.0]
+     */
     public void setDrivePower(double power){
         if(isReversed)
             mDrive.set(ControlMode.PercentOutput, -power);
@@ -75,22 +113,43 @@ public class SwerveModule{
             mDrive.set(ControlMode.PercentOutput, power);
     }
 
+    /**
+     * 
+     * @param deg   the angle to set the wheel to, in degrees
+     */
     public void setSteeringDegrees(double deg){
         setpoint = Math.toRadians(deg);
     }
 
+    /**
+     * 
+     * @param rad   the angle to set the wheel to, in radians
+     */
     public void setSteeringRadians(double rad){
         setpoint = rad;
     }
 
+    /**
+     * 
+     * @return returns the setpoint of the steering in radians
+     */
     public double getSetpointRadians(){
         return setpoint;
     }
 
+    /**
+     * 
+     * @return  returns the setpoint of the sttering in degrees
+     */
     public double getSetpointDegrees(){
         return Math.toDegrees(setpoint);
     }
 
+    /**
+     * 
+     * @param radians   an unbounded angle in radians
+     * @return          a radian measure bounded between [-pi, pi]
+     */
     private double boundHalfRadians(double radians){
         while(radians >= Math.PI) radians -=2*Math.PI;
         while(radians < -Math.PI) radians +=2*Math.PI;
