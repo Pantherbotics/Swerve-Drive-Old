@@ -11,10 +11,13 @@ public class Constants{
     public static int kSetMotorSpeed = 0;
 
     //PID
-    public static double kSwerveP = 0.5;
-    public static double kSwerveI = 0.;
-    public static double kSwerveD = 0.1;
+    public static double kSwerveP = 1.0;
+    public static double kSwerveI = 0.0;
+    public static double kSwerveD = 0.0;
 
+    public static int kPeakCurrentDuration = 10;
+    public static int kPeakCurrentLimit = 20;
+    public static int kSustainedCurrentLimit = 15;
     public static int kPIDLoopIdx = 0;
     public static int kTimeoutMs = 30;
 }

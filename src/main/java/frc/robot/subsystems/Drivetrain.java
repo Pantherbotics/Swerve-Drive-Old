@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
+import frc.robot.ModuleLocation;
 import frc.robot.SwerveModule;
 
 public class Drivetrain extends Subsystem {
@@ -11,7 +12,7 @@ public class Drivetrain extends Subsystem {
   public void initDefaultCommand() {
 
   }
-  public SwerveModule getSwerveModule(){
+  public SwerveModule getSwerveModule(ModuleLocation location){
     return module;
   }
 }

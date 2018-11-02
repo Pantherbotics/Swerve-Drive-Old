@@ -31,11 +31,19 @@ public class SwerveModule{
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
+
+        //Configure steering Talon SRX
+        mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+        mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
+        mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
+        mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
+        mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
         mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
         mSteering.setInverted(false);
         mSteering.setSensorPhase(true);
+
+        //Configure drive Talon SRX
         mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
         sumError = 0;
         lastError = getModifiedError();
@@ -44,8 +52,8 @@ public class SwerveModule{
         pidLoop = new Notifier(() -> {
             currentError = getModifiedError();  //update the current error to the most recent one
             sumError += currentError * dt;
-            errorChange = currentError-lastError;
-            pidOutput = kP * currentError + kI * sumError + kD * errorChange/dt; //you guys know this, or at least you better...
+            errorChange = (currentError-lastError)/dt;
+            pidOutput = kP * currentError + kI * sumError + kD * errorChange; //you guys know this, or at least you better...
             mSteering.set(ControlMode.PercentOutput, pidOutput);
             lastError = currentError;   //update the last error to be the current error
         });
