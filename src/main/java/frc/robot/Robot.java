@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Command c = new setMotorSpeed(oi.stick.getMagnitude(), module);
     c.start();
-    module.setSteeringDegrees(90);
+    module.setSteeringDegrees(500);
     SmartDashboard.putNumber("Steering Error", module.getModifiedError());
     SmartDashboard.putNumber("Steering Position", module.getSteeringRadians());
     SmartDashboard.putNumber("Steering Setpoint", module.getSetpointRadians());

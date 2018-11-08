@@ -12,8 +12,9 @@ public class SwerveModule{
     //private AnalogInput SteeringAnalog = new AnalogInput(0);
     private TalonSRX mDrive, mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
-    private volatile double setpoint, sumError, errorChange, lastError, currentError, pidOutput;
+    private volatile double sumError, errorChange, lastError, currentError, pidOutput;
     private boolean isReversed;
+    private int setpoint;
 
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
     private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
@@ -45,17 +46,21 @@ public class SwerveModule{
         //Configure drive Talon SRX
         mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
+        /** 
         sumError = 0;
         lastError = getModifiedError();
         currentError = lastError;
+        */
     
         pidLoop = new Notifier(() -> {
             currentError = getModifiedError();  //update the current error to the most recent one
+            /*
             sumError += currentError * dt;
             errorChange = (currentError-lastError)/dt;
-            pidOutput = kP * currentError + kI * sumError + kD * errorChange; //you guys know this, or at least you better...
+            */
+            pidOutput = kP * currentError; //+ kI * sumError + kD * errorChange; //you guys know this, or at least you better...
             mSteering.set(ControlMode.PercentOutput, pidOutput);
-            lastError = currentError;   //update the last error to be the current error
+            //lastError = currentError;   //update the last error to be the current error
         });
 
         this.isReversed = isReversed;
@@ -74,8 +79,8 @@ public class SwerveModule{
      * @return  the angle of the wheel, where angle is an element of [-pi, pi]
      */
 
-    public double getSteeringRadians(){
-        return (((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN) * (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
+    public int getSteeringRadians(){
+        return (int)(((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN)); //* (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
     }
 
     /**
@@ -98,7 +103,7 @@ public class SwerveModule{
      * 
      * @return  the unbounded steering error, in radians
      */
-    public double getError(){
+    public int getError(){
         return setpoint - getSteeringRadians();
     }
 
@@ -107,7 +112,7 @@ public class SwerveModule{
      * @return  the steering error bounded to [-pi, pi]
      */
     public double getModifiedError(){
-        return boundHalfRadians(getError());
+        return getError();
     }
 
     /**
@@ -125,15 +130,15 @@ public class SwerveModule{
      * 
      * @param deg   the angle to set the wheel to, in degrees
      */
-    public void setSteeringDegrees(double deg){
-        setpoint = Math.toRadians(deg);
+    public void setSteeringDegrees(int deg){
+        setpoint = deg;
     }
 
     /**
      * 
      * @param rad   the angle to set the wheel to, in radians
      */
-    public void setSteeringRadians(double rad){
+    public void setSteeringRadians(int rad){
         setpoint = rad;
     }
 
