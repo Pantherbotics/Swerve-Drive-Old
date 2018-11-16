@@ -81,7 +81,7 @@ public class SwerveModule{
      * @return  the angle of the wheel, where angle is an element of [-pi, pi]
      */
 
-    public int getSteeringTicks(){
+    public int getSteeringDegrees(){
         int steeringPosition = mSteering.getSelectedSensorPosition(Constants.kPIDLoopIdx);
 
         if(steeringPosition >= 0){
@@ -102,20 +102,13 @@ public class SwerveModule{
         return pidOutput;
     }
 
-    /**
-     * 
-     * @return the angle of the wheel, where angle is an element of [-180, 180]
-     */
-    public double getSteeringDegrees(){
-        return 0; //Math.toDegrees(getSteeringRadians());
-    }
 
     /**
      * 
      * @return  the unbounded steering error, in radians
      */
     public int getError(){
-        return setpoint - getSteeringTicks();
+        return setpoint - getSteeringDegrees();
     }
 
     /**
@@ -123,7 +116,7 @@ public class SwerveModule{
      * @return  the steering error bounded to [-pi, pi]
      */
     public double getModifiedError(){
-        return getError();
+        return Math.sin(Math.toRadians(getError()));
     }
 
     /**
@@ -147,37 +140,10 @@ public class SwerveModule{
 
     /**
      * 
-     * @param rad   the angle to set the wheel to, in radians
-     */
-    public void setSteeringRadians(int rad){
-        setpoint = rad;
-    }
-
-    /**
-     * 
-     * @return returns the setpoint of the steering in radians
-     */
-    public double getSetpointRadians(){
-        return setpoint;
-    }
-
-    /**
-     * 
      * @return  returns the setpoint of the sttering in degrees
      */
     public double getSetpointDegrees(){
-        return Math.toDegrees(setpoint);
-    }
-
-    /**
-     * 
-     * @param radians   an unbounded angle in radians
-     * @return          a radian measure bounded between [-pi, pi]
-     */
-    private double boundHalfRadians(double radians){
-        while(radians >= Math.PI) radians -=2*Math.PI;
-        while(radians < -Math.PI) radians +=2*Math.PI;
-        return radians;
+        return setpoint;
     }
 
     /**
@@ -188,12 +154,11 @@ public class SwerveModule{
      * @return          the encoder input normalized to [0, 1023]
      * */
     private int normalizeEncoder(int minVal, int maxVal, int encPos){
-        return (int)Math.round(((Math.abs(encPos) % 1023) - minVal) * Math.abs((1023.0/(maxVal-minVal))));
+        return (int)Math.round(((Math.abs(encPos) % 1023) - minVal) * Math.abs((360.0/(maxVal-minVal))));
     }
 
     public void setSteeringPower(double x){
         mSteering.set(ControlMode.PercentOutput, x);
     }
-
 
 }

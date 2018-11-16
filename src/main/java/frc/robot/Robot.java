@@ -34,9 +34,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   //public static final Drivetrain kDrivetrain = new Drivetrain();
-  //public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
+  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
 
-  public TalonSRX mSteering = new TalonSRX(Constants.kSteeringID);
   public OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
@@ -48,21 +47,6 @@ public class Robot extends TimedRobot {
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-
-    mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-    mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
-    mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
-    mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
-    mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
-    mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
-    mSteering.setInverted(true);
-    mSteering.setSensorPhase(true);
-
-    mSteering.config_kP(0, 2.0, 0);
-    mSteering.config_kI(0, 0 ,0);
-    mSteering.config_kD(0, 0, 0);
-
-    //mSteering.enableCurrentLimit(false);
   }
 
   /**
@@ -75,8 +59,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-      SmartDashboard.putNumber("Raw Encoder", mSteering.getSelectedSensorPosition(0));
-
+    
   }
 
   /**
@@ -118,18 +101,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
-    int setpoint = 600;
-    int encPos = mSteering.getSelectedSensorPosition(0);
-    int correctedEncoderPosition = (int)Math.round(((Math.abs(encPos) % 1023) - 45) * Math.abs((1023.0/(870-45))));
-    int error = setpoint - correctedEncoderPosition;
-
-    SmartDashboard.putNumber("Setpoint", setpoint);
-    SmartDashboard.putNumber("EncPos", correctedEncoderPosition);
-    SmartDashboard.putNumber("Error", error);
-
-    mSteering.set(ControlMode.PercentOutput, Constants.kSwerveP * error);
-
+    module.setSteeringDegrees(180);
     Scheduler.getInstance().run();
   }
 
