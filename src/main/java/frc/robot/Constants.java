@@ -3,7 +3,7 @@ package frc.robot;
 public class Constants{
     //Motors
     public static int kDriveID = 1;
-    public static int kSteeringID = 0;
+    public static int kSteeringID = 3;
     //Buttons/Joystick
     public static int kJoyStick = 0;
     public static int kJoystickLeft = 1;
@@ -11,7 +11,7 @@ public class Constants{
     public static int kSetMotorSpeed = 0;
 
     //PID
-    public static double kSwerveP = 0.0004;
+    public static double kSwerveP = 0.002;
     public static double kSwerveI = 0.0;
     public static double kSwerveD = 0.0;
 

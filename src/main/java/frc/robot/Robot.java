@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  public static final Drivetrain kDrivetrain = new Drivetrain();
+  //public static final Drivetrain kDrivetrain = new Drivetrain();
   //public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
 
   public TalonSRX mSteering = new TalonSRX(Constants.kSteeringID);
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
-    /*
+
     mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
     mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
@@ -61,7 +61,8 @@ public class Robot extends TimedRobot {
     mSteering.config_kP(0, 2.0, 0);
     mSteering.config_kI(0, 0 ,0);
     mSteering.config_kD(0, 0, 0);
-    */
+
+    //mSteering.enableCurrentLimit(false);
   }
 
   /**
@@ -117,7 +118,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    /*
+
     int setpoint = 600;
     int encPos = mSteering.getSelectedSensorPosition(0);
     int correctedEncoderPosition = (int)Math.round(((Math.abs(encPos) % 1023) - 45) * Math.abs((1023.0/(870-45))));
@@ -127,13 +128,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("EncPos", correctedEncoderPosition);
     SmartDashboard.putNumber("Error", error);
 
-    if(correctedEncoderPosition > 600)
-      mSteering.set(ControlMode.PercentOutput, -1.0);
-    if(correctedEncoderPosition < 600)
-      mSteering.set(ControlMode.PercentOutput, 1.0);
-*/
+    mSteering.set(ControlMode.PercentOutput, Constants.kSwerveP * error);
 
-    mSteering.set(ControlMode.PercentOutput, oi.getLeftXAxis());
     Scheduler.getInstance().run();
   }
 
@@ -143,5 +139,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public void resetTalon(TalonSRX talon){
+    talon.configOpenloopRamp(0, 10);
+    talon.configClosedloopRamp(0, 10);
+    talon.configPeakOutputForward(1, 10);
+    talon.configPeakOutputReverse(-1, 10);
+    talon.configNominalOutputForward(0, 10);
+    talon.configNominalOutputReverse(0, 10);
+    talon.configNeutralDeadband(0.04,10);
+    talon.configVoltageCompSaturation(0, 10);
+    talon.configVoltageMeasurementFilter(32, 10);
+    talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+    talon.configSelectedFeedbackCoefficient(1.0, 0, 10);
   }
 }
