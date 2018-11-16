@@ -2,10 +2,8 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.AnalogInput;
 
 
 public class SwerveModule{
@@ -17,8 +15,11 @@ public class SwerveModule{
     private int setpoint;
 
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
-    private static final double ROTATION_SENSOR_MIN = 156;  //we measured this
-    private static final double ROTATION_SENSOR_MAX = 978;  //and this
+    private static final int POSITIVE_ROTATION_SENSOR_MIN = 156;  //we measured this
+    private static final int POSITIVE_ROTATION_SENSOR_MAX = 978;  //and this
+
+    private static final int NEGATIVE_ROTATION_SENSOR_MIN = 45;  //we measured this
+    private static final int NEGATIVE_ROTATION_SENSOR_MAX = 870;  //and this
     
     /**
      * 
@@ -79,8 +80,13 @@ public class SwerveModule{
      * @return  the angle of the wheel, where angle is an element of [-pi, pi]
      */
 
-    public int getSteeringRadians(){
-        return (int)(((Math.abs(mSteering.getSelectedSensorPosition(0) % 1024)) - ROTATION_SENSOR_MIN)); //* (2.0*Math.PI/(ROTATION_SENSOR_MAX-ROTATION_SENSOR_MIN))) - Math.PI; //this is actually pretty good... the only thing I changed was to make everything into degrees.
+    public int getSteeringTicks(){
+        int steeringPosition = mSteering.getSelectedSensorPosition(Constants.kPIDLoopIdx);
+        if(steeringPosition >= 0){
+            return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition);
+        }
+        else
+            return normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition);
     }
 
     /**
@@ -96,7 +102,7 @@ public class SwerveModule{
      * @return the angle of the wheel, where angle is an element of [-180, 180]
      */
     public double getSteeringDegrees(){
-        return Math.toDegrees(getSteeringRadians());
+        return 0; //Math.toDegrees(getSteeringRadians());
     }
 
     /**
@@ -104,7 +110,7 @@ public class SwerveModule{
      * @return  the unbounded steering error, in radians
      */
     public int getError(){
-        return setpoint - getSteeringRadians();
+        return setpoint - getSteeringTicks();
     }
 
     /**
@@ -167,5 +173,16 @@ public class SwerveModule{
         while(radians >= Math.PI) radians -=2*Math.PI;
         while(radians < -Math.PI) radians +=2*Math.PI;
         return radians;
+    }
+
+    /**
+     *
+     * @param encPos    the encoder input to be normalized
+     * @param minVal    the minimum MEASURED ABSOLUTE value of the encoder
+     * @param maxVal    the maximum MEASURED ABSOLUTE value of the encoder
+     * @return          the encoder input normalized to [0, 1023]
+     * */
+    private int normalizeEncoder(int minVal, int maxVal, int encPos){
+        return (int)Math.round(((Math.abs(encPos) % 1023) - minVal) * Math.abs((1023.0/(maxVal-minVal))));
     }
 }
