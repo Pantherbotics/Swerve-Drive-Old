@@ -13,4 +13,8 @@ public class OI{
     public double getLeftJoystickAngleRad(){
         return Math.atan2(stick.getRawAxis(1), stick.getRawAxis(0));
     }
+
+    public double getLeftXAxis(){
+        return stick.getRawAxis(0);
+    }
 }

@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
 
+    /*
     mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
     mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
@@ -56,6 +57,11 @@ public class Robot extends TimedRobot {
     mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
     mSteering.setInverted(true);
     mSteering.setSensorPhase(true);
+
+    mSteering.config_kP(0, 2.0, 0);
+    mSteering.config_kI(0, 0 ,0);
+    mSteering.config_kD(0, 0, 0);
+    */
   }
 
   /**
@@ -68,6 +74,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+      SmartDashboard.putNumber("Raw Encoder", mSteering.getSelectedSensorPosition(0));
 
   }
 
@@ -110,6 +117,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    /*
     int setpoint = 600;
     int encPos = mSteering.getSelectedSensorPosition(0);
     int correctedEncoderPosition = (int)Math.round(((Math.abs(encPos) % 1023) - 45) * Math.abs((1023.0/(870-45))));
@@ -119,21 +127,19 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("EncPos", correctedEncoderPosition);
     SmartDashboard.putNumber("Error", error);
 
+    if(correctedEncoderPosition > 600)
+      mSteering.set(ControlMode.PercentOutput, -1.0);
+    if(correctedEncoderPosition < 600)
+      mSteering.set(ControlMode.PercentOutput, 1.0);
+*/
 
-    double power = Constants.kSwerveP * error;
-
-    if(power > 1)
-        power = 1;
-    if(power < -1)
-        power = -1;
-    SmartDashboard.putNumber("Power", power);
-    mSteering.set(ControlMode.PercentOutput, power);
-
+    mSteering.set(ControlMode.PercentOutput, oi.getLeftXAxis());
     Scheduler.getInstance().run();
   }
 
   /**
-   * This function is called periodically during test mode.
+   * This function is called periodically during test mode.][\
+   *
    */
   @Override
   public void testPeriodic() {
