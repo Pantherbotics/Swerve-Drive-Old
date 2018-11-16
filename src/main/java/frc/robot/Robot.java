@@ -9,6 +9,10 @@ package frc.robot;
 
 //import javax.swing.text.Position;
 //import edu.wpi.first.wpilibj.Joystick;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -30,7 +34,9 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static final Drivetrain kDrivetrain = new Drivetrain();
-  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
+  //public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
+
+  public TalonSRX mSteering = new TalonSRX(Constants.kSteeringID);
   public OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
@@ -41,6 +47,15 @@ public class Robot extends TimedRobot {
     m_chooser.addDefault("Default Auto", kDefaultAuto);
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+    mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
+    mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
+    mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
+    mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
+    mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
+    mSteering.setInverted(true);
+    mSteering.setSensorPhase(true);
   }
 
   /**
@@ -53,6 +68,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+
   }
 
   /**
@@ -94,11 +110,25 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    module.setSteeringDegrees(500);
-    SmartDashboard.putNumber("Steering Error", module.getModifiedError());
-    SmartDashboard.putNumber("Steering Position (Ticks)", module.getSteeringTicks());
-    SmartDashboard.putNumber("Steering Setpoint", module.getSetpointRadians());
-    SmartDashboard.putNumber("Steering Output", module.getSteeringOutput());
+    int setpoint = 600;
+    int encPos = mSteering.getSelectedSensorPosition(0);
+    int correctedEncoderPosition = (int)Math.round(((Math.abs(encPos) % 1023) - 45) * Math.abs((1023.0/(870-45))));
+    int error = setpoint - correctedEncoderPosition;
+
+    SmartDashboard.putNumber("Setpoint", setpoint);
+    SmartDashboard.putNumber("EncPos", correctedEncoderPosition);
+    SmartDashboard.putNumber("Error", error);
+
+
+    double power = Constants.kSwerveP * error;
+
+    if(power > 1)
+        power = 1;
+    if(power < -1)
+        power = -1;
+    SmartDashboard.putNumber("Power", power);
+    mSteering.set(ControlMode.PercentOutput, power);
+
     Scheduler.getInstance().run();
   }
 

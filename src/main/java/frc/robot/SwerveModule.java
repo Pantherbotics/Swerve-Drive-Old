@@ -15,11 +15,11 @@ public class SwerveModule{
     private int setpoint;
 
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
-    private static final int POSITIVE_ROTATION_SENSOR_MIN = 156;  //we measured this
-    private static final int POSITIVE_ROTATION_SENSOR_MAX = 978;  //and this
+    private static final int POSITIVE_ROTATION_SENSOR_MIN = 45;  //we measured this
+    private static final int POSITIVE_ROTATION_SENSOR_MAX = 870;  //and this
 
-    private static final int NEGATIVE_ROTATION_SENSOR_MIN = 45;  //we measured this
-    private static final int NEGATIVE_ROTATION_SENSOR_MAX = 870;  //and this
+    private static final int NEGATIVE_ROTATION_SENSOR_MIN = 156;  //we measured this
+    private static final int NEGATIVE_ROTATION_SENSOR_MAX = 978;  //and this
     
     /**
      * 
@@ -41,28 +41,28 @@ public class SwerveModule{
         mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
         mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
         mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
-        mSteering.setInverted(false);
+        mSteering.setInverted(true);
         mSteering.setSensorPhase(true);
 
         //Configure drive Talon SRX
         mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
-        /** 
+        /**
         sumError = 0;
         lastError = getModifiedError();
         currentError = lastError;
-        */
-    
+*/
         pidLoop = new Notifier(() -> {
             currentError = getModifiedError();  //update the current error to the most recent one
             /*
             sumError += currentError * dt;
             errorChange = (currentError-lastError)/dt;
-            */
+*/
             pidOutput = kP * currentError; //+ kI * sumError + kD * errorChange; //you guys know this, or at least you better...
             mSteering.set(ControlMode.PercentOutput, pidOutput);
             //lastError = currentError;   //update the last error to be the current error
         });
+
 
         this.isReversed = isReversed;
 
@@ -82,11 +82,15 @@ public class SwerveModule{
 
     public int getSteeringTicks(){
         int steeringPosition = mSteering.getSelectedSensorPosition(Constants.kPIDLoopIdx);
+
         if(steeringPosition >= 0){
             return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition);
         }
         else
             return normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition);
+
+
+
     }
 
     /**
@@ -185,4 +189,10 @@ public class SwerveModule{
     private int normalizeEncoder(int minVal, int maxVal, int encPos){
         return (int)Math.round(((Math.abs(encPos) % 1023) - minVal) * Math.abs((1023.0/(maxVal-minVal))));
     }
+
+    public void setSteeringPower(double x){
+        mSteering.set(ControlMode.PercentOutput, x);
+    }
+
+
 }
