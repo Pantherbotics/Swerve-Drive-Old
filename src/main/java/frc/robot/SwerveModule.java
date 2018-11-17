@@ -2,14 +2,14 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Util.DriveCommand;
+import frc.robot.Util.WrappedTalonSRX;
 
 
 public class SwerveModule{
     //private AnalogInput SteeringAnalog = new AnalogInput(0);
-    private TalonSRX mDrive, mSteering;
+    private WrappedTalonSRX mDrive, mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
     private volatile double sumError, errorChange, lastError, currentError, pidOutput;
     private boolean isReversed;
@@ -33,9 +33,13 @@ public class SwerveModule{
      * @param kD            the steering kD gain
      */
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double offset, double kP, double kI, double kD){
-        mDrive = new TalonSRX(kDriveID);
-        mSteering = new TalonSRX(kSteeringID);
+        mDrive = new WrappedTalonSRX(kDriveID);
+        mSteering = new WrappedTalonSRX(kSteeringID);
         this.offset = offset;
+
+        //reset the Talons before use
+        mDrive.reset();
+        mSteering.reset();
 
         //Configure steering Talon SRX
         mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -180,18 +184,4 @@ public class SwerveModule{
         return angle_degrees;
     }
     
-    public void resetTalon(TalonSRX talon){
-        talon.configOpenloopRamp(0, 10);
-        talon.configClosedloopRamp(0, 10);
-        talon.configPeakOutputForward(1, 10);
-        talon.configPeakOutputReverse(-1, 10);
-        talon.configNominalOutputForward(0, 10);
-        talon.configNominalOutputReverse(0, 10);
-        talon.configNeutralDeadband(0.04,10);
-        talon.configVoltageCompSaturation(0, 10);
-        talon.configVoltageMeasurementFilter(32, 10);
-        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-        talon.configSelectedFeedbackCoefficient(1.0, 0, 10);
-      }
-
 }
