@@ -17,8 +17,7 @@ import static frc.robot.Robot.kDrivetrain;
 import static frc.robot.Robot.oi;
 
 public class Drive extends Command {
-  double leftX, leftY, rightX, heading, temp, A, B, C, D, frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed, max;
-  DriveCommand frontLeftCommand, frontRightCommand, backLeftCommand, backRightCommand;
+  
   public Drive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -33,26 +32,26 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    leftX = oi.getLeftXAxis();
-    leftY = oi.getLeftYAxis();
-    rightX = oi.getRightXAxis();
-    heading = Math.toRadians(Robot.kDrivetrain.getGyro());
+    double leftX = oi.getLeftXAxis();
+    double leftY = oi.getLeftYAxis();
+    double rightX = oi.getRightXAxis();
+    double heading = Math.toRadians(Robot.kDrivetrain.getGyro());
 
-    temp = leftY*Math.cos(heading) + leftX*Math.sin(heading);
+    double temp = leftY*Math.cos(heading) + leftX*Math.sin(heading);
     leftX = -leftY*Math.sin(heading) + leftX*Math.cos(heading);
     leftY = temp;
 
-    A = leftX - rightX * (Constants.kWheelbase/Constants.kTurnRadius);
-    B = leftX + rightX * (Constants.kWheelbase/Constants.kTurnRadius);
-    C = leftY - rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
-    D = leftY + rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
+    double A = leftX - rightX * (Constants.kWheelbase/Constants.kTurnRadius);
+    double B = leftX + rightX * (Constants.kWheelbase/Constants.kTurnRadius);
+    double C = leftY - rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
+    double D = leftY + rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
 
-    frontLeftSpeed = Math.hypot(B, D);
-    frontRightSpeed = Math.hypot(B, C);
-    backLeftSpeed = Math.hypot(A, D);
-    backRightSpeed = Math.hypot(A, C);
+    double frontLeftSpeed = Math.hypot(B, D);
+    double frontRightSpeed = Math.hypot(B, C);
+    double backLeftSpeed = Math.hypot(A, D);
+    double backRightSpeed = Math.hypot(A, C);
     
-    max = frontLeftSpeed;
+    double max = frontLeftSpeed;
 
     if(frontRightSpeed > max)
       max = frontRightSpeed;
@@ -67,10 +66,10 @@ public class Drive extends Command {
       backRightSpeed /= max;
     }
 
-    frontLeftCommand = new DriveCommand((Math.atan2(B, D) * 180.0/Math.PI), frontLeftSpeed);
-    frontRightCommand = new DriveCommand((Math.atan2(B, C) * 180.0/Math.PI), frontRightSpeed);
-    backLeftCommand = new DriveCommand((Math.atan2(A, D) * 180.0/Math.PI), backLeftSpeed);
-    backRightCommand = new DriveCommand((Math.atan2(A, C) * 180.0/Math.PI), backRightSpeed);
+    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, D) * 180.0/Math.PI), frontLeftSpeed);
+    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, C) * 180.0/Math.PI), frontRightSpeed);
+    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, D) * 180.0/Math.PI), backLeftSpeed);
+    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, C) * 180.0/Math.PI), backRightSpeed);
 
     kDrivetrain.setModule(ModuleLocation.FRONT_LEFT, frontLeftCommand);
     kDrivetrain.setModule(ModuleLocation.FRONT_RIGHT, frontRightCommand);
