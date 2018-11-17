@@ -9,16 +9,11 @@ package frc.robot;
 
 //import javax.swing.text.Position;
 //import edu.wpi.first.wpilibj.Joystick;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.setMotorSpeed;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -33,8 +28,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  //public static final Drivetrain kDrivetrain = new Drivetrain();
-  public static final SwerveModule module = new SwerveModule(Constants.kSteeringID, Constants.kDriveID, false, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
+  public static final Drivetrain kDrivetrain = new Drivetrain();
 
   public OI oi = new OI();
   /**
@@ -59,7 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    
+    kDrivetrain.updateDashboard();
   }
 
   /**
@@ -101,7 +95,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    module.setSteeringDegrees(180);
+    kDrivetrain.setAllAngle(oi.getLeftJoystickAngle());
     Scheduler.getInstance().run();
   }
 
@@ -113,17 +107,4 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  public void resetTalon(TalonSRX talon){
-    talon.configOpenloopRamp(0, 10);
-    talon.configClosedloopRamp(0, 10);
-    talon.configPeakOutputForward(1, 10);
-    talon.configPeakOutputReverse(-1, 10);
-    talon.configNominalOutputForward(0, 10);
-    talon.configNominalOutputReverse(0, 10);
-    talon.configNeutralDeadband(0.04,10);
-    talon.configVoltageCompSaturation(0, 10);
-    talon.configVoltageMeasurementFilter(32, 10);
-    talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
-    talon.configSelectedFeedbackCoefficient(1.0, 0, 10);
-  }
 }

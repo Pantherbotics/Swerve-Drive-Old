@@ -10,8 +10,8 @@ public class OI{
         return stick.getDirectionDegrees();
     }
 
-    public double getLeftJoystickAngleRad(){
-        return Math.atan2(stick.getRawAxis(1), stick.getRawAxis(0));
+    public double getLeftJoystickAngle(){
+        return Math.toDegrees(Math.atan2(stick.getRawAxis(0), -stick.getRawAxis(1)));
     }
 
     public double getLeftXAxis(){

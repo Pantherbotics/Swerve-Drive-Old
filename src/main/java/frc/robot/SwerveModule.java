@@ -12,7 +12,8 @@ public class SwerveModule{
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
     private volatile double sumError, errorChange, lastError, currentError, pidOutput;
     private boolean isReversed;
-    private int setpoint;
+    private double setpoint;
+    private double offset;
 
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
     private static final int POSITIVE_ROTATION_SENSOR_MIN = 45;  //we measured this
@@ -30,9 +31,10 @@ public class SwerveModule{
      * @param kI            the steering kI gain
      * @param kD            the steering kD gain
      */
-    public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double kP, double kI, double kD){
+    public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double offset, double kP, double kI, double kD){
         mDrive = new TalonSRX(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
+        this.offset = offset;
 
         //Configure steering Talon SRX
         mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -40,7 +42,7 @@ public class SwerveModule{
         mSteering.configPeakCurrentDuration(Constants.kPeakCurrentDuration, Constants.kTimeoutMs);
         mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
         mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
-        mSteering.enableCurrentLimit(false);
+        mSteering.enableCurrentLimit(true);
         mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
         mSteering.setInverted(true);
         mSteering.setSensorPhase(true);
@@ -85,10 +87,10 @@ public class SwerveModule{
         int steeringPosition = mSteering.getSelectedSensorPosition(Constants.kPIDLoopIdx);
 
         if(steeringPosition >= 0){
-            return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition);
+            return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition)-180;
         }
         else
-            return normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition);
+            return normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition)-180;
 
 
 
@@ -107,7 +109,7 @@ public class SwerveModule{
      * 
      * @return  the unbounded steering error, in radians
      */
-    public int getError(){
+    public double getError(){
         return setpoint - getSteeringDegrees();
     }
 
@@ -116,7 +118,7 @@ public class SwerveModule{
      * @return  the steering error bounded to [-pi, pi]
      */
     public double getModifiedError(){
-        return Math.sin(Math.toRadians(getError()));
+        return (boundHalfDegrees(getError()))/180;
     }
 
     /**
@@ -134,8 +136,8 @@ public class SwerveModule{
      * 
      * @param deg   the angle to set the wheel to, in degrees
      */
-    public void setSteeringDegrees(int deg){
-        setpoint = deg;
+    public void setSteeringDegrees(double deg){
+        setpoint = boundHalfDegrees(deg + offset);
     }
 
     /**
@@ -160,5 +162,26 @@ public class SwerveModule{
     public void setSteeringPower(double x){
         mSteering.set(ControlMode.PercentOutput, x);
     }
+
+    public static double boundHalfDegrees(double angle_degrees) {
+        while (angle_degrees >= 180.0) angle_degrees -= 360.0;
+        while (angle_degrees < -180.0) angle_degrees += 360.0;
+        return angle_degrees;
+    }
+    
+
+    public void resetTalon(TalonSRX talon){
+        talon.configOpenloopRamp(0, 10);
+        talon.configClosedloopRamp(0, 10);
+        talon.configPeakOutputForward(1, 10);
+        talon.configPeakOutputReverse(-1, 10);
+        talon.configNominalOutputForward(0, 10);
+        talon.configNominalOutputReverse(0, 10);
+        talon.configNeutralDeadband(0.04,10);
+        talon.configVoltageCompSaturation(0, 10);
+        talon.configVoltageMeasurementFilter(32, 10);
+        talon.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+        talon.configSelectedFeedbackCoefficient(1.0, 0, 10);
+      }
 
 }
