@@ -99,6 +99,9 @@ public class Robot extends TimedRobot {
     kDrivetrain.setAllPower(oi.getLeftMagnitude());
     kDrivetrain.setAllAngle(oi.getLeftJoystickAngle());
     */
+    SmartDashboard.putNumber("Left Joystick X", oi.getLeftXAxis());
+    SmartDashboard.putNumber("Left Joystick Y", oi.getLeftYAxis());
+    SmartDashboard.putNumber("Right Joystick X", oi.getRightXAxis());
     Scheduler.getInstance().run();
   }
 

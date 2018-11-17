@@ -3,6 +3,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants;
 
 public class OI{
+
     public Joystick stick = new Joystick(Constants.kJoyStick);
     public OI(){
     }
@@ -19,7 +20,11 @@ public class OI{
     }
 
     public double getLeftYAxis(){
-        return stick.getRawAxis(1);
+        double val = ((-stick.getRawAxis(1)) + Constants.kLeftYOffset) * (1.0/(1.0-Constants.kLeftYOffset));
+        val = val > 1.0 ? 1.0 : val;
+        val = val < -1.0 ? -1.0 : val;
+        val = Math.abs(val) < .05 ? 0 : val;
+        return val;
     }
 
     public double getRightXAxis(){

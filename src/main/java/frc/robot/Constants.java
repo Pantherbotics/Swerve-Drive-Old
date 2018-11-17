@@ -12,7 +12,7 @@ public class Constants{
     public static int kBackRightSteerID = 8;
     
     //Module-Specific
-    public static double kFrontLeftOffset = 32;
+    public static double kFrontLeftOffset = 31;
     public static double kFrontRightOffset = -122;
     public static double kBackLeftOffset = 0;
     public static double kBackRightOffset = 153;
@@ -22,6 +22,7 @@ public class Constants{
     public static int kJoystickLeft = 1;
     public static int kToggleDrive = 4;
     public static int kSetMotorSpeed = 0;
+    public static double kLeftYOffset = 0.2;
 
     //Physical Constants
     public static double kWheelbase = 18.0;
