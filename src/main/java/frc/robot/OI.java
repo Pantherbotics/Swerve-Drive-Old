@@ -17,4 +17,16 @@ public class OI{
     public double getLeftXAxis(){
         return stick.getRawAxis(0);
     }
+
+    public double getLeftYAxis(){
+        return stick.getRawAxis(1);
+    }
+
+    public double getRightXAxis(){
+        return stick.getRawAxis(2);
+    }
+
+    public double getLeftMagnitude(){
+        return Math.hypot(stick.getRawAxis(1), stick.getRawAxis(0));
+    }
 }

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
+import frc.robot.Util.DriveCommand;
 
 
 public class SwerveModule{
@@ -163,13 +164,22 @@ public class SwerveModule{
         mSteering.set(ControlMode.PercentOutput, x);
     }
 
+    public void set(double degrees, double power){
+        setSteeringDegrees(degrees);
+        setDrivePower(power);
+    }
+
+    public void set(DriveCommand command){
+        setSteeringDegrees(command.getDegrees());
+        setDrivePower(command.getSpeed());
+    }
+
     public static double boundHalfDegrees(double angle_degrees) {
         while (angle_degrees >= 180.0) angle_degrees -= 360.0;
         while (angle_degrees < -180.0) angle_degrees += 360.0;
         return angle_degrees;
     }
     
-
     public void resetTalon(TalonSRX talon){
         talon.configOpenloopRamp(0, 10);
         talon.configClosedloopRamp(0, 10);

@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static final Drivetrain kDrivetrain = new Drivetrain();
 
-  public OI oi = new OI();
+  public static final OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -95,7 +95,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    /*
+    kDrivetrain.setAllPower(oi.getLeftMagnitude());
     kDrivetrain.setAllAngle(oi.getLeftJoystickAngle());
+    */
     Scheduler.getInstance().run();
   }
 

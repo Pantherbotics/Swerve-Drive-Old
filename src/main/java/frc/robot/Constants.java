@@ -12,16 +12,21 @@ public class Constants{
     public static int kBackRightSteerID = 8;
     
     //Module-Specific
-    public static double kFrontLeftOffset = 180;
-    public static double kFrontRightOffset = 64;
+    public static double kFrontLeftOffset = 32;
+    public static double kFrontRightOffset = -122;
     public static double kBackLeftOffset = 0;
-    public static double kBackRightOffset = -155;
+    public static double kBackRightOffset = 153;
 
     //Buttons/Joystick
     public static int kJoyStick = 0;
     public static int kJoystickLeft = 1;
     public static int kToggleDrive = 4;
     public static int kSetMotorSpeed = 0;
+
+    //Physical Constants
+    public static double kWheelbase = 18.0;
+    public static double kTrackwidth = 18.0;
+    public static double kTurnRadius = Math.hypot(kWheelbase, kTrackwidth);
 
     //PID
     public static double kSwerveP = 3.0;
