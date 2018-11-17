@@ -174,8 +174,7 @@ public class SwerveModule{
     }
 
     public void set(DriveCommand command){
-        setSteeringDegrees(command.getDegrees());
-        setDrivePower(command.getSpeed());
+        set(command.getDegrees(), command.getSpeed());
     }
 
     public static double boundHalfDegrees(double angle_degrees) {

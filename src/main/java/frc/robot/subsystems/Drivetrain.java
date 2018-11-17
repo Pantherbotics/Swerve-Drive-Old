@@ -52,20 +52,7 @@ public class Drivetrain extends Subsystem {
   }
 
   public void setModule(ModuleLocation loc, DriveCommand command){
-    switch(loc){
-      case FRONT_LEFT:
-        moduleFrontLeft.set(command);
-        break;
-      case FRONT_RIGHT:
-        moduleFrontRight.set(command);
-        break;
-      case BACK_LEFT:
-        moduleBackLeft.set(command);
-        break;
-      case BACK_RIGHT:
-        moduleBackRight.set(command);
-        break;
-    }
+    setModule(loc, command.getDegrees(), command.getSpeed());
   }
 
   public void setAllAngle(double degrees){
