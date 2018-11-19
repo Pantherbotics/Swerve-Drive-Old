@@ -20,15 +20,17 @@ public class OI{
     }
 
     public double getLeftYAxis(){
+        /*
         double val = ((-stick.getRawAxis(1)) + Constants.kLeftYOffset) * (1.0/(1.0-Constants.kLeftYOffset));
         val = val > 1.0 ? 1.0 : val;
         val = val < -1.0 ? -1.0 : val;
         val = Math.abs(val) < .05 ? 0 : val;
-        return val;
+        return val;*/
+        return stick.getRawAxis(1)*0.25;
     }
 
     public double getRightXAxis(){
-        return stick.getRawAxis(2);
+        return stick.getRawAxis(2)*0.25;
     }
 
     public double getLeftMagnitude(){
