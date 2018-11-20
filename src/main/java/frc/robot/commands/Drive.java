@@ -48,10 +48,10 @@ public class Drive extends Command {
     double C = leftY - rightX * (Constants.kTrackwidth/Constants.kWheelbase);
     double D = leftY + rightX * (Constants.kTrackwidth/Constants.kWheelbase);
 
-    double frontLeftSpeed = Math.hypot(B, D);
-    double frontRightSpeed = Math.hypot(B, C);
-    double backLeftSpeed = Math.hypot(A, D);
-    double backRightSpeed = Math.hypot(A, C);
+    double frontLeftSpeed = Math.hypot(B, C);
+    double frontRightSpeed = Math.hypot(B, D);
+    double backLeftSpeed = Math.hypot(A, C);
+    double backRightSpeed = Math.hypot(A, D);
     
     double max = frontLeftSpeed;
 
@@ -68,10 +68,10 @@ public class Drive extends Command {
       backRightSpeed /= max;
     }
 
-    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, D) * (180.0/Math.PI)), frontLeftSpeed);
-    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, C) * (180.0/Math.PI)), frontRightSpeed);
-    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, D) * (180.0/Math.PI) ), backLeftSpeed);
-    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, C) * (180.0/Math.PI)), backRightSpeed);
+    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, C) * (180.0/Math.PI)), frontLeftSpeed);
+    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, D) * (180.0/Math.PI)), frontRightSpeed);
+    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, C) * (180.0/Math.PI) ), backLeftSpeed);
+    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, D) * (180.0/Math.PI)), backRightSpeed);
 
     kDrivetrain.setModule(ModuleLocation.FRONT_LEFT, frontLeftCommand);
     kDrivetrain.setModule(ModuleLocation.FRONT_RIGHT, frontRightCommand);
