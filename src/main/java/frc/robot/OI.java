@@ -1,30 +1,39 @@
 package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.commands.*;
 
 public class OI{
-    int Pos = 700;
-    int oldPos = 700;
+
     public Joystick stick = new Joystick(Constants.kJoyStick);
-    public Button startPID = new JoystickButton(stick, Constants.kStartPID);
-    public Button raisePos = new JoystickButton(stick, Constants.kRaisePos);
-    public Button lowerPos = new JoystickButton(stick, Constants.kLowerPos);
     public OI(){
-        startPID.whenPressed(new GoToEncoderPos(Pos, Robot.kDrivetrain.getSwerveModule()));
-        lowerPos.whenPressed(new GoToEncoderPos(lowerPos(), Robot.kDrivetrain.getSwerveModule()));
-        lowerPos.whenPressed(new GoToEncoderPos(raisePos(), Robot.kDrivetrain.getSwerveModule()));
     }
-    public int lowerPos(){
-        int newPos = oldPos - 100;
-        oldPos = newPos;
-        return newPos;
+    public double getLeftAngle(){
+        return stick.getDirectionDegrees();
     }
-    public int raisePos(){
-        int newPos = oldPos + 100;
-        oldPos = newPos;
-        return newPos;
+
+    public double getLeftJoystickAngle(){
+        return Math.toDegrees(Math.atan2(stick.getRawAxis(0), -stick.getRawAxis(1)));
+    }
+
+    public double getLeftXAxis(){
+        return stick.getRawAxis(0)*0.5;
+    }
+
+    public double getLeftYAxis(){
+        /*
+        double val = ((-stick.getRawAxis(1)) + Constants.kLeftYOffset) * (1.0/(1.0-Constants.kLeftYOffset));
+        val = val > 1.0 ? 1.0 : val;
+        val = val < -1.0 ? -1.0 : val;
+        val = Math.abs(val) < .05 ? 0 : val;
+        return val;*/
+        return stick.getRawAxis(1)*0.5;
+    }
+
+    public double getRightXAxis(){
+        return 0;//stick.getRawAxis(2)*0.25;
+    }
+
+    public double getLeftMagnitude(){
+        return Math.hypot(stick.getRawAxis(1), stick.getRawAxis(0));
     }
 }
