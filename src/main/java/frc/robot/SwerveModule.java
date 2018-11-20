@@ -17,11 +17,11 @@ public class SwerveModule{
     private double offset;
 
     private static final double dt = 0.01;  //this is how fast we run our PID loop.
-    private static final int POSITIVE_ROTATION_SENSOR_MIN = 45;  //we measured this
-    private static final int POSITIVE_ROTATION_SENSOR_MAX = 870;  //and this
+    private int kPositiveRotationMin = 45;  //we measured this
+    private int kPositiveRotationMax = 870;  //and this
 
-    private static final int NEGATIVE_ROTATION_SENSOR_MIN = 156;  //we measured this
-    private static final int NEGATIVE_ROTATION_SENSOR_MAX = 978;  //and this
+    private int kNegativeRotationMin = 156;  //we measured this
+    private int kNegativeRotationMax = 978;  //and this
     
     /**
      * 
@@ -88,19 +88,22 @@ public class SwerveModule{
      * @return  the angle of the wheel, where angle is an element of [-pi, pi]
      */
 
-    public int getSteeringDegrees(){
+    public double getSteeringDegrees(){
         int steeringPosition = mSteering.getSelectedSensorPosition(Constants.kPIDLoopIdx);
 
         if(steeringPosition >= 0){
-            return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition)-180;
+            return normalizeEncoder(kPositiveRotationMin, kPositiveRotationMax, steeringPosition)-180;
         }
         else
-            return (360-normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition))-180;
+            return (360-normalizeEncoder(kNegativeRotationMin, kNegativeRotationMax, steeringPosition))-180;
 
 
 
     }
 
+    public double getSteeringDegreesCompensated(){
+        return getSteeringDegrees() - offset;
+    }
     /**
      * 
      * @return  the closed-loop PID output, calculated by PID loop
@@ -160,8 +163,8 @@ public class SwerveModule{
      * @param maxVal    the maximum MEASURED ABSOLUTE value of the encoder
      * @return          the encoder input normalized to [0, 1023]
      * */
-    private int normalizeEncoder(int minVal, int maxVal, int encPos){
-        return (int)Math.round(((Math.abs(encPos) % 1023) - minVal) * Math.abs((360.0/(maxVal-minVal))));
+    private double normalizeEncoder(int minVal, int maxVal, int encPos){
+        return ((Math.abs(encPos) % 1023) - minVal) * Math.abs((360.0/(maxVal-minVal)));
     }
 
     public void setSteeringPower(double x){
@@ -175,6 +178,22 @@ public class SwerveModule{
 
     public void set(DriveCommand command){
         set(command.getDegrees(), command.getSpeed());
+    }
+
+    public void configEncValues(int posMin, int posMax, int negMin, int negMax){
+        kPositiveRotationMin = posMin;
+        kPositiveRotationMax = posMax;
+
+        kNegativeRotationMin = negMin;
+        kNegativeRotationMax = negMax;
+    }
+
+    public int getRawSteeringEncoder(){
+        return mSteering.getSelectedSensorPosition(0);
+    }
+
+    public int getSpeed(){
+        return mDrive.getSelectedSensorVelocity(0);
     }
 
     public static double boundHalfDegrees(double angle_degrees) {
