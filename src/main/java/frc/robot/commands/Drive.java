@@ -37,14 +37,16 @@ public class Drive extends Command {
     double rightX = oi.getRightXAxis();
     double heading = Math.toRadians(Robot.kDrivetrain.getGyro());
 
+    /*
     double temp = leftY*Math.cos(heading) + leftX*Math.sin(heading);
     leftX = -leftY*Math.sin(heading) + leftX*Math.cos(heading);
     leftY = temp;
+    */
 
-    double A = leftX - rightX * (Constants.kWheelbase/Constants.kTurnRadius);
-    double B = leftX + rightX * (Constants.kWheelbase/Constants.kTurnRadius);
-    double C = leftY - rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
-    double D = leftY + rightX * (Constants.kTrackwidth/Constants.kTurnRadius);
+    double A = leftX - rightX * (Constants.kWheelbase/Constants.kTrackwidth);
+    double B = leftX + rightX * (Constants.kWheelbase/Constants.kTrackwidth);
+    double C = leftY - rightX * (Constants.kTrackwidth/Constants.kWheelbase);
+    double D = leftY + rightX * (Constants.kTrackwidth/Constants.kWheelbase);
 
     double frontLeftSpeed = Math.hypot(B, D);
     double frontRightSpeed = Math.hypot(B, C);
@@ -55,9 +57,9 @@ public class Drive extends Command {
 
     if(frontRightSpeed > max)
       max = frontRightSpeed;
-    if(backLeftSpeed > max)
+    else if(backLeftSpeed > max)
       max = backLeftSpeed;
-    if(backRightSpeed > max)
+    else if(backRightSpeed > max)
       max = backRightSpeed;
     if(max > 1){
       frontLeftSpeed /= max;
@@ -66,10 +68,10 @@ public class Drive extends Command {
       backRightSpeed /= max;
     }
 
-    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, D) * 180.0/Math.PI), frontLeftSpeed);
-    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, C) * 180.0/Math.PI), frontRightSpeed);
-    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, D) * 180.0/Math.PI), backLeftSpeed);
-    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, C) * 180.0/Math.PI), backRightSpeed);
+    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, D) * (180.0/Math.PI)), frontLeftSpeed);
+    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, C) * (180.0/Math.PI)), frontRightSpeed);
+    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, D) * (180.0/Math.PI) ), backLeftSpeed);
+    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, C) * (180.0/Math.PI)), backRightSpeed);
 
     kDrivetrain.setModule(ModuleLocation.FRONT_LEFT, frontLeftCommand);
     kDrivetrain.setModule(ModuleLocation.FRONT_RIGHT, frontRightCommand);

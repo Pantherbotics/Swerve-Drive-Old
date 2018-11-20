@@ -95,7 +95,7 @@ public class SwerveModule{
             return normalizeEncoder(POSITIVE_ROTATION_SENSOR_MIN, POSITIVE_ROTATION_SENSOR_MAX, steeringPosition)-180;
         }
         else
-            return normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition)-180;
+            return (360-normalizeEncoder(NEGATIVE_ROTATION_SENSOR_MIN, NEGATIVE_ROTATION_SENSOR_MAX, steeringPosition))-180;
 
 
 
