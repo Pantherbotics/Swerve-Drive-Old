@@ -16,7 +16,9 @@ public class SwerveModule{
     private double setpoint;
     private double offset;
 
-    private static final double dt = 0.01;  //this is how fast we run our PID loop.
+    private double lastAngle;
+
+    private static final double dt = 0.02;  //this is how fast we run our PID loop.
     private int kPositiveRotationMin = 45;  //we measured this
     private int kPositiveRotationMax = 870;  //and this
 
@@ -37,6 +39,8 @@ public class SwerveModule{
         mSteering = new WrappedTalonSRX(kSteeringID);
         this.offset = offset;
 
+        lastAngle = 0;
+
         //reset the Talons before use
         mDrive.reset();
         mSteering.reset();
@@ -48,7 +52,7 @@ public class SwerveModule{
         mSteering.configPeakCurrentLimit(Constants.kPeakCurrentLimit, Constants.kTimeoutMs);
         mSteering.configContinuousCurrentLimit(Constants.kSustainedCurrentLimit, Constants.kTimeoutMs);
         mSteering.enableCurrentLimit(true);
-        mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 1, 0);
+        mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10, 0);
         mSteering.setInverted(true);
         mSteering.setSensorPhase(true);
 
@@ -172,8 +176,18 @@ public class SwerveModule{
     }
 
     public void set(double degrees, double power){
-        setSteeringDegrees(degrees);
-        setDrivePower(power);
+        double supplement = degrees > 0 ? degrees - 180 : 180 + degrees;
+
+        if(Math.abs(supplement-lastAngle) <= 90){
+            setSteeringDegrees(supplement);
+            setDrivePower(-power);
+            lastAngle = supplement;
+        }
+        else {
+            setSteeringDegrees(degrees);
+            setDrivePower(power);
+            lastAngle = degrees;
+        }
     }
 
     public void set(DriveCommand command){
