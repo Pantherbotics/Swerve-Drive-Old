@@ -16,7 +16,7 @@ public class OI{
     }
 
     public double getLeftXAxis(){
-        return stick.getRawAxis(0)*0.5;
+        return Math.abs(stick.getRawAxis(0)) > 0.1 ? stick.getRawAxis(0) : 0;
     }
 
     public double getLeftYAxis(){
@@ -26,11 +26,15 @@ public class OI{
         val = val < -1.0 ? -1.0 : val;
         val = Math.abs(val) < .05 ? 0 : val;
         return val;*/
-        return stick.getRawAxis(1)*0.5;
+        return Math.abs(stick.getRawAxis(1)) > 0.1 ? stick.getRawAxis(1) : 0;
     }
 
     public double getRightXAxis(){
-        return 0;//stick.getRawAxis(2)*0.25;
+
+        if(stick.getRawButton(1))
+            return (Math.abs(stick.getRawAxis(2)) > 0.1 ? stick.getRawAxis(2) : 0) * 0.25;
+        else
+            return 0;
     }
 
     public double getLeftMagnitude(){

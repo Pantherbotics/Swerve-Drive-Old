@@ -13,6 +13,9 @@ public class Drivetrain extends Subsystem {
   private SwerveModule moduleBackLeft = new SwerveModule(Constants.kBackLeftSteerID, Constants.kBackLeftDriveID, true, Constants.kBackLeftOffset, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
   private SwerveModule moduleBackRight = new SwerveModule(Constants.kBackRightSteerID, Constants.kBackRightDriveID, true, Constants.kBackRightOffset, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
   public Drivetrain(){
+    moduleFrontLeft.configEncValues(47, 855, 156, 978);
+    moduleFrontRight.configEncValues(44, 853, 156, 978);
+    moduleBackLeft.configEncValues(45, 868, 156, 978);
   }
   @Override
   public void initDefaultCommand() {
@@ -84,6 +87,16 @@ public class Drivetrain extends Subsystem {
     SmartDashboard.putNumber("Front Right Position", moduleFrontRight.getSteeringDegrees());
     SmartDashboard.putNumber("Back Left Position", moduleBackLeft.getSteeringDegrees());
     SmartDashboard.putNumber("Back Right Position", moduleBackRight.getSteeringDegrees());
+
+    SmartDashboard.putNumber("Front Left Raw Position", moduleFrontLeft.getRawSteeringEncoder());
+    SmartDashboard.putNumber("Front Right Raw Position", moduleFrontRight.getRawSteeringEncoder());
+    SmartDashboard.putNumber("Back Left Raw Position", moduleBackLeft.getRawSteeringEncoder());
+    SmartDashboard.putNumber("Back Right Raw Position", moduleBackRight.getRawSteeringEncoder());
+
+    SmartDashboard.putNumber("Front Left Speed", moduleFrontLeft.getSpeed());
+    SmartDashboard.putNumber("Front Right Speed", moduleFrontRight.getSpeed());
+    SmartDashboard.putNumber("Back Left Speed", moduleBackLeft.getSpeed());
+    SmartDashboard.putNumber("Back Right Speed", moduleBackRight.getSpeed());
   }
 
   public double getGyro(){
