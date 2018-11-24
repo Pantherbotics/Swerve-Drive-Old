@@ -3,7 +3,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import edu.wpi.first.wpilibj.Notifier;
-import frc.robot.Util.DriveCommand;
+import frc.robot.Util.DriveSignal;
 import frc.robot.Util.WrappedTalonSRX;
 
 
@@ -177,7 +177,6 @@ public class SwerveModule{
 
     public void set(double degrees, double power){
         double supplement = degrees > 0 ? degrees - 180 : 180 + degrees;
-
         if(Math.abs(supplement-lastAngle) <= 90){
             setSteeringDegrees(supplement);
             setDrivePower(-power);
@@ -190,7 +189,7 @@ public class SwerveModule{
         }
     }
 
-    public void set(DriveCommand command){
+    public void set(DriveSignal command){
         set(command.getDegrees(), command.getSpeed());
     }
 

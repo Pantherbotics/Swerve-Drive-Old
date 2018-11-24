@@ -1,8 +1,8 @@
 package frc.robot.Util;
 
-public class DriveCommand{
+public class DriveSignal {
     private double degrees, speed;
-    public DriveCommand(double degrees, double speed){
+    public DriveSignal(double degrees, double speed){
         this.degrees = degrees;
         this.speed = speed;
     }
