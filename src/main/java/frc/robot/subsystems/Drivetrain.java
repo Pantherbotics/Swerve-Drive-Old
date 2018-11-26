@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Util.DriveCommand;
+import frc.robot.Util.DriveSignal;
 import frc.robot.Util.ModuleLocation;
 import frc.robot.commands.Drive;
 import frc.robot.SwerveModule;
@@ -54,7 +54,7 @@ public class Drivetrain extends Subsystem {
     }
   }
 
-  public void setModule(ModuleLocation loc, DriveCommand command){
+  public void setModule(ModuleLocation loc, DriveSignal command){
     setModule(loc, command.getDegrees(), command.getSpeed());
   }
 

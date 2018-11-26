@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.Util.DriveCommand;
+import frc.robot.Util.DriveSignal;
 import frc.robot.Util.ModuleLocation;
 
 import static frc.robot.Robot.kDrivetrain;
@@ -68,10 +68,10 @@ public class Drive extends Command {
       backRightSpeed /= max;
     }
 
-    DriveCommand frontLeftCommand = new DriveCommand((Math.atan2(B, C) * (180.0/Math.PI)), frontLeftSpeed);
-    DriveCommand frontRightCommand = new DriveCommand((Math.atan2(B, D) * (180.0/Math.PI)), frontRightSpeed);
-    DriveCommand backLeftCommand = new DriveCommand((Math.atan2(A, C) * (180.0/Math.PI) ), backLeftSpeed);
-    DriveCommand backRightCommand = new DriveCommand((Math.atan2(A, D) * (180.0/Math.PI)), backRightSpeed);
+    DriveSignal frontLeftCommand = new DriveSignal((Math.atan2(B, C) * (180.0/Math.PI)), frontLeftSpeed);
+    DriveSignal frontRightCommand = new DriveSignal((Math.atan2(B, D) * (180.0/Math.PI)), frontRightSpeed);
+    DriveSignal backLeftCommand = new DriveSignal((Math.atan2(A, C) * (180.0/Math.PI) ), backLeftSpeed);
+    DriveSignal backRightCommand = new DriveSignal((Math.atan2(A, D) * (180.0/Math.PI)), backRightSpeed);
 
     kDrivetrain.setModule(ModuleLocation.FRONT_LEFT, frontLeftCommand);
     kDrivetrain.setModule(ModuleLocation.FRONT_RIGHT, frontRightCommand);
