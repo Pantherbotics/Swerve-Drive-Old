@@ -6,13 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+//import com.ctre.phoenix.motorcontrol.can.*;                     //MAY NEED
+//import com.ctre.phoenix.motorcontrol.ControlMode;               //MAY NEED
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import frc.robot.Constants;                                     //MAY NEED
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Drivetrain;
-
+import frc.robot.subsystems.*;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -21,12 +23,16 @@ import frc.robot.subsystems.Drivetrain;
  * project.
  */
 public class Robot extends TimedRobot {
+  //private TalonSRX mLeft = new TalonSRX(0);
+  public static final OI oi = new OI();
+  //private TalonSRX thisIsMyTalonSRX = new TalonSRX(Constants.kTalonOne);
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  
   public static final Drivetrain kDrivetrain = new Drivetrain();
-  public OI oi = new OI();
+  
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -43,6 +49,8 @@ public class Robot extends TimedRobot {
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
    *
+   * 
+   * 
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
@@ -89,10 +97,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //Command c = new GoToEncoderPos(100, module);
-    //c.start();
+    //thisIsMyTalonSRX.set(ControlMode.PercentOutput, oi.getLeftXAxis());
     Scheduler.getInstance().run();
-    //System.out.println(module.getSteeringEncoder());
   }
 
   /**
@@ -102,3 +108,4 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 }
+

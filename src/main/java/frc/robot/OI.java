@@ -1,30 +1,25 @@
+//this code was made by team 3863 FIRST Robotics, Newbury Park, CA 91320
 package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//import edu.wpi.first.wpilibj.command.PrintCommand;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.buttons.Button;
-import frc.robot.commands.*;
 
 public class OI{
-    int Pos = 700;
-    int oldPos = 700;
-    public Joystick stick = new Joystick(Constants.kJoyStick);
-    public Button startPID = new JoystickButton(stick, Constants.kStartPID);
-    public Button raisePos = new JoystickButton(stick, Constants.kRaisePos);
-    public Button lowerPos = new JoystickButton(stick, Constants.kLowerPos);
-    public OI(){
-        startPID.whenPressed(new GoToEncoderPos(Pos, Robot.kDrivetrain.getSwerveModule()));
-        lowerPos.whenPressed(new GoToEncoderPos(lowerPos(), Robot.kDrivetrain.getSwerveModule()));
-        lowerPos.whenPressed(new GoToEncoderPos(raisePos(), Robot.kDrivetrain.getSwerveModule()));
+    public Joystick stick = new Joystick(Constants.kJoystickPort);
+    public OI(){ //CONTRUCTOR
+
     }
-    public int lowerPos(){
-        int newPos = oldPos - 100;
-        oldPos = newPos;
-        return newPos;
+    public double getLeftXAxis(){
+        return stick.getRawAxis(Constants.kJoystickLeftXAxis);
     }
-    public int raisePos(){
-        int newPos = oldPos + 100;
-        oldPos = newPos;
-        return newPos;
+    public double getLeftYAxis(){
+        return stick.getRawAxis(Constants.kJoystickLeftYAxis);
+    }
+    public double getRightYAxis(){
+        return stick.getRawAxis(Constants.kJoystickRightYAxis);
+    }
+    public double getRightXAxis(){
+        return stick.getRawAxis(Constants.kJoystickRightXAxis);
     }
 }
+
