@@ -7,11 +7,14 @@
 
 package frc.robot;
 
+//import javax.swing.text.Position;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +29,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static final Drivetrain kDrivetrain = new Drivetrain();
-  public OI oi = new OI();
+
+  public static final OI oi = new OI();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -36,6 +40,7 @@ public class Robot extends TimedRobot {
     m_chooser.addDefault("Default Auto", kDefaultAuto);
     m_chooser.addObject("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
   }
 
   /**
@@ -48,6 +53,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    kDrivetrain.updateDashboard();
   }
 
   /**
@@ -89,16 +95,22 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //Command c = new GoToEncoderPos(100, module);
-    //c.start();
+    /*
+    kDrivetrain.setAllPower(oi.getLeftMagnitude());
+    kDrivetrain.setAllAngle(oi.getLeftJoystickAngle());
+    */
+    SmartDashboard.putNumber("Left Joystick X", oi.getLeftXAxis());
+    SmartDashboard.putNumber("Left Joystick Y", oi.getLeftYAxis());
+    SmartDashboard.putNumber("Right Joystick X", oi.getRightXAxis());
     Scheduler.getInstance().run();
-    //System.out.println(module.getSteeringEncoder());
   }
 
   /**
-   * This function is called periodically during test mode.
+   * This function is called periodically during test mode.][\
+   *
    */
   @Override
   public void testPeriodic() {
   }
+
 }
