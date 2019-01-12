@@ -12,10 +12,10 @@ public class Constants{
     public static int kBackRightSteerID = 8;
     
     //Module-Specific
-    public static double kFrontLeftOffset = 31;//48;
-    public static double kFrontRightOffset = -46;//-54;
-    public static double kBackLeftOffset = -98;//-94;
-    public static double kBackRightOffset = 153;
+    public static double kFrontLeftOffset = -75;//48;
+    public static double kFrontRightOffset = 75;//-54;
+    public static double kBackLeftOffset = 5;//-94;
+    public static double kBackRightOffset = 105;
 
     //Buttons/Joystick
     public static int kJoyStick = 0;
