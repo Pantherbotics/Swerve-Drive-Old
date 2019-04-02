@@ -2,14 +2,14 @@ package frc.robot;
 
 public class Constants{
     //Motors
-    public static int kFrontLeftDriveID = 1;
-    public static int kFrontLeftSteerID = 2;
-    public static int kFrontRightDriveID = 3;
-    public static int kFrontRightSteerID = 4;
-    public static int kBackLeftDriveID = 5;
+    public static int kFrontLeftDriveID = 0;
+    public static int kFrontLeftSteerID = 4;
+    public static int kFrontRightDriveID = 1;
+    public static int kFrontRightSteerID = 5;
+    public static int kBackLeftDriveID = 2;
     public static int kBackLeftSteerID = 6;
-    public static int kBackRightDriveID = 7;
-    public static int kBackRightSteerID = 8;
+    public static int kBackRightDriveID = 3;
+    public static int kBackRightSteerID = 7;
     
     //Module-Specific
     public static double kFrontLeftOffset = 31;//48;

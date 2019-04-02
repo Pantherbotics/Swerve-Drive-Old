@@ -2,10 +2,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.SwerveModule;
 import frc.robot.Util.DriveCommand;
 import frc.robot.Util.ModuleLocation;
 import frc.robot.commands.Drive;
-import frc.robot.SwerveModule;
 
 public class Drivetrain extends Subsystem {
   private SwerveModule moduleFrontLeft = new SwerveModule(Constants.kFrontLeftSteerID, Constants.kFrontLeftDriveID, true, Constants.kFrontLeftOffset, Constants.kSwerveP, Constants.kSwerveI, Constants.kSwerveD);
@@ -92,11 +92,12 @@ public class Drivetrain extends Subsystem {
     SmartDashboard.putNumber("Front Right Raw Position", moduleFrontRight.getRawSteeringEncoder());
     SmartDashboard.putNumber("Back Left Raw Position", moduleBackLeft.getRawSteeringEncoder());
     SmartDashboard.putNumber("Back Right Raw Position", moduleBackRight.getRawSteeringEncoder());
-
+    /*
     SmartDashboard.putNumber("Front Left Speed", moduleFrontLeft.getSpeed());
     SmartDashboard.putNumber("Front Right Speed", moduleFrontRight.getSpeed());
     SmartDashboard.putNumber("Back Left Speed", moduleBackLeft.getSpeed());
     SmartDashboard.putNumber("Back Right Speed", moduleBackRight.getSpeed());
+    */
   }
 
   public double getGyro(){

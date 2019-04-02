@@ -35,7 +35,7 @@ public class Drive extends Command {
     double leftX = oi.getLeftXAxis();
     double leftY = oi.getLeftYAxis();
     double rightX = oi.getRightXAxis();
-    double heading = Math.toRadians(Robot.kDrivetrain.getGyro());
+    //double heading = Math.toRadians(Robot.kDrivetrain.getGyro());
 
     /*
     double temp = leftY*Math.cos(heading) + leftX*Math.sin(heading);
