@@ -1,8 +1,8 @@
 package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-//import com.ctre.phoenix.motorcontrol.StatusFrame;
-//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Util.DriveCommand;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Spark;
 public class SwerveModule{
     //private AnalogInput SteeringAnalog = new AnalogInput(0);
     private Spark mDrive;
-    private WrappedTalonSRX mSteering;
+    private TalonSRX mSteering;
     private Notifier pidLoop;           //A notifier is a thread. Basically think of a thread as something running in the background.
     //private volatile double sumError, errorChange, lastError, currentError, pidOutput;
     private volatile double currentError, pidOutput;
@@ -40,11 +40,11 @@ public class SwerveModule{
      */
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double offset, double kP, double kI, double kD){
         mDrive = new Spark(kDriveID);
-        mSteering = new WrappedTalonSRX(kSteeringID);
+        mSteering = new TalonSRX(kSteeringID);
         this.offset = offset;
-
+    
         lastAngle = 0;
-        /*
+        
         //Configure steering Talon SRX
         mSteering.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         mSteering.configOpenloopRamp(0, Constants.kTimeoutMs);      //this is what we were missing!
@@ -55,11 +55,11 @@ public class SwerveModule{
         mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10, 0);
         mSteering.setInverted(true);
         mSteering.setSensorPhase(true);
-        mDrive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        sumError = 0;
-        lastError = getModifiedError();
-        currentError = lastError;
-        */
+        
+        //sumError = 0;
+        //lastError = getModifiedError();
+        //currentError = lastError;
+        
         pidLoop = new Notifier(() -> {
             currentError = getModifiedError();  //update the current error to the most recent one
             /*

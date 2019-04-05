@@ -2,14 +2,14 @@ package frc.robot;
 
 public class Constants{
     //Motors
-    public static int kFrontLeftDriveID = 0;
-    public static int kFrontLeftSteerID = 4;
-    public static int kFrontRightDriveID = 1;
-    public static int kFrontRightSteerID = 5;
+    public static int kFrontLeftDriveID = 3;
+    public static int kFrontLeftSteerID = 13;
+    public static int kFrontRightDriveID = 0;
+    public static int kFrontRightSteerID = 2;
     public static int kBackLeftDriveID = 2;
-    public static int kBackLeftSteerID = 6;
-    public static int kBackRightDriveID = 3;
-    public static int kBackRightSteerID = 7;
+    public static int kBackLeftSteerID = 14;
+    public static int kBackRightDriveID = 1;
+    public static int kBackRightSteerID = 1;
     
     //Module-Specific
     public static double kFrontLeftOffset = 31;//48;
@@ -30,7 +30,7 @@ public class Constants{
     public static double kTurnRadius = Math.hypot(kWheelbase, kTrackwidth);
 
     //PID
-    public static double kSwerveP = 4.8;
+    public static double kSwerveP = 0.1;
     public static double kSwerveI = 0.0;
     public static double kSwerveD = 0.0;
 

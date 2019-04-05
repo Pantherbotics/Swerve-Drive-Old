@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Util.ModuleLocation;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -49,6 +50,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    System.out.println(kDrivetrain.getModule(ModuleLocation.BACK_RIGHT).getSteeringDegrees());
     kDrivetrain.updateDashboard();
   }
 

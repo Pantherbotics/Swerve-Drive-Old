@@ -32,7 +32,7 @@ public class OI{
     public double getRightXAxis(){
 
         if(stick.getRawButton(1))
-            return (Math.abs(stick.getRawAxis(2)) > 0.1 ? stick.getRawAxis(2) : 0) * 0.25;
+            return (Math.abs(stick.getRawAxis(3)) > 0.1 ? stick.getRawAxis(3) : 0) * 0.25;
         else
             return 0;
     }
