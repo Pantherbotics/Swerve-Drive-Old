@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Notifier;
 import frc.robot.Util.DriveCommand;
-import frc.robot.Util.WrappedTalonSRX;
 import edu.wpi.first.wpilibj.Spark;
 
 public class SwerveModule{
@@ -41,6 +40,8 @@ public class SwerveModule{
     public SwerveModule(int kSteeringID, int kDriveID, boolean isReversed, double offset, double kP, double kI, double kD){
         mDrive = new Spark(kDriveID);
         mSteering = new TalonSRX(kSteeringID);
+        mSteering.configFactoryDefault();
+        mSteering.setSelectedSensorPosition(0);  //===================================remove eventually
         this.offset = offset;
     
         lastAngle = 0;
@@ -55,7 +56,7 @@ public class SwerveModule{
         mSteering.setStatusFramePeriod(StatusFrame.Status_4_AinTempVbat, 10, 0);
         mSteering.setInverted(true);
         mSteering.setSensorPhase(true);
-        
+        //mSteering.setSelectedSensorPosition(0);  //===================================remove eventually
         //sumError = 0;
         //lastError = getModifiedError();
         //currentError = lastError;

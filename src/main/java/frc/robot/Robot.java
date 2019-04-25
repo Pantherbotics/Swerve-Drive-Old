@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    System.out.println(kDrivetrain.getModule(ModuleLocation.BACK_RIGHT).getSteeringDegrees());
+    //System.out.println(kDrivetrain.getModule(ModuleLocation.BACK_RIGHT).getSteeringDegrees());
     kDrivetrain.updateDashboard();
   }
 

@@ -1,4 +1,6 @@
 package frc.robot.subsystems;
+//import static org.junit.Assert.assertNotSame;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
@@ -19,7 +21,7 @@ public class Drivetrain extends Subsystem {
   }
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new Drive());
+    //setDefaultCommand(new Drive());
   }
   
   public SwerveModule getModule(ModuleLocation location){
